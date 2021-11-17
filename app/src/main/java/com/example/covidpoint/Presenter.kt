@@ -9,6 +9,7 @@ class Presenter {
     fun getCountries() {
         ApiFactory.apiService.getCountries()
             .subscribeOn(Schedulers.io())
+            .map { it.locations }
             .subscribe(
                 {
                     Log.d("TAG", it.toString())

@@ -6,26 +6,25 @@ import com.google.gson.annotations.SerializedName
 data class Country(
     @SerializedName("id")
     @Expose
-    val id: Int,
+    val id: Int?,
     @SerializedName("country")
     @Expose
-    val country: String,
+    val country: String?,
     @SerializedName("country_code")
     @Expose
-    val countryCode: String,
+    val countryCode: String?,
     @SerializedName("country_population")
     @Expose
-    val countryPopulation: Int,
+    val countryPopulation: Int?,
     @SerializedName("province")
     @Expose
-    val province: String,
+    val province: String?,
     @SerializedName("last_updated")
     @Expose
-    val lastUpdated: String,
+    val lastUpdated: String?,
     @SerializedName("coordinates")
     @Expose
-    val coordinates: Coordinates,
+    val coordinates: Coordinates?,
     @SerializedName("latest")
-    @Expose
-    val latest: Statistic
+    val latest: Statistic?
 )
