@@ -7,7 +7,4 @@
     <string name="btn_detail">Подробнее</string>
     <string name="btn_hide">Скрыть</string>
     <string name="covid_point">CovidPoint</string>
-    <string name="deaths_label">Смертельные случаи</string>
-    <string name="recovered_label">Выздоровевшие</string>
-    <string name="dynamic_label">Динамика заражения</string>
 </resources>
