@@ -6,4 +6,7 @@
     <string name="flag">Флаг</string>
     <string name="btn_detail"><![CDATA[Подробнее >]]></string>
     <string name="covid_point">CovidPoint</string>
+    <string name="deaths_label">Смертельные случаи</string>
+    <string name="recovered_label">Выздоровевшие</string>
+    <string name="dynamic_label">Динамика заражения</string>
 </resources>

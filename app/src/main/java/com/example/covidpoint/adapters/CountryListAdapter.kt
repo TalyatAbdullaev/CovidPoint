@@ -17,8 +17,10 @@ import com.example.covidpoint.api.Urls
 import com.example.covidpoint.databinding.CountryItemBinding
 import com.example.covidpoint.pojo.Country
 
-class CountryListAdapter(private val countries: List<Country>): RecyclerView.Adapter<CountryListAdapter.CountryListViewHolder>() {
-    inner class CountryListViewHolder(val binding: CountryItemBinding): RecyclerView.ViewHolder(binding.root)
+class CountryListAdapter(private val countries: List<Country>) :
+    RecyclerView.Adapter<CountryListAdapter.CountryListViewHolder>() {
+    inner class CountryListViewHolder(val binding: CountryItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryListViewHolder {
         val binding = CountryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,8 +28,8 @@ class CountryListAdapter(private val countries: List<Country>): RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: CountryListViewHolder, position: Int) {
-        with(holder){
-            with(countries[position]){
+        with(holder) {
+            with(countries[position]) {
                 val countryName = binding.tvCountryName
                 val confirmed = binding.tvConfirmedNum
                 val imageView = binding.ivFlag
@@ -48,7 +50,7 @@ class CountryListAdapter(private val countries: List<Country>): RecyclerView.Ada
             .asBitmap()
             .load(photoUrl)
             .circleCrop()
-            .addListener(object: RequestListener<Bitmap> {
+            .addListener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
