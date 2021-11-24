@@ -1,10 +1,10 @@
-package com.example.covidpoint.adapters
+package com.example.covidpoint.presentation.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.covidpoint.fragments.ListCountriesFragment
-import com.example.covidpoint.fragments.MapCountriesFragment
+import com.example.covidpoint.presentation.fragments.ListCountriesFragment
+import com.example.covidpoint.presentation.fragments.MapCountriesFragment
 
 class FragmentsAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

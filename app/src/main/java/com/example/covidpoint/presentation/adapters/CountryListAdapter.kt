@@ -1,4 +1,4 @@
-package com.example.covidpoint.adapters
+package com.example.covidpoint.presentation.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -13,9 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.covidpoint.api.Urls
+import com.example.covidpoint.data.network.utils.Urls
 import com.example.covidpoint.databinding.CountryItemBinding
-import com.example.covidpoint.pojo.Country
+import com.example.covidpoint.data.pojo.Country
 
 class CountryListAdapter(private val countries: List<Country>) :
     RecyclerView.Adapter<CountryListAdapter.CountryListViewHolder>() {
@@ -69,8 +69,6 @@ class CountryListAdapter(private val countries: List<Country>) :
                 ): Boolean {
                     TODO("Not yet implemented")
                 }
-
-
             })
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)

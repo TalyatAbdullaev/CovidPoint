@@ -1,7 +1,9 @@
-package com.example.covidpoint.api
+package com.example.covidpoint.data.network.api
 
-import com.example.covidpoint.pojo.Country
-import com.example.covidpoint.pojo.Response
+import com.example.covidpoint.data.network.utils.RequestField
+import com.example.covidpoint.data.network.utils.Urls
+import com.example.covidpoint.data.pojo.Country
+import com.example.covidpoint.data.pojo.Response
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

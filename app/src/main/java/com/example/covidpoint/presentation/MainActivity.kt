@@ -1,9 +1,9 @@
-package com.example.covidpoint
+package com.example.covidpoint.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.covidpoint.adapters.FragmentsAdapter
+import com.example.covidpoint.R
+import com.example.covidpoint.presentation.adapters.FragmentsAdapter
 import com.example.covidpoint.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

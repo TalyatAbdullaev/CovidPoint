@@ -1,5 +1,6 @@
-package com.example.covidpoint.api
+package com.example.covidpoint.data.network.api
 
+import com.example.covidpoint.data.network.utils.Urls
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

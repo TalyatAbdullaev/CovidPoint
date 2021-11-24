@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/listCountriesFragment"
-        android:name="com.example.covidpoint.fragments.ListCountriesFragment"
+        android:name="com.example.covidpoint.presentation.fragments.ListCountriesFragment"
         android:label="fragment_countires_list"
         tools:layout="@layout/fragment_countires_list" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.covidpoint.fragments.SplashFragment"
+        android:name="com.example.covidpoint.presentation.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/mapCountriesFragment"
-        android:name="com.example.covidpoint.fragments.MapCountriesFragment"
+        android:name="com.example.covidpoint.presentation.fragments.MapCountriesFragment"
         android:label="fragment_countires_map"
         tools:layout="@layout/fragment_countires_map" />
 </navigation>

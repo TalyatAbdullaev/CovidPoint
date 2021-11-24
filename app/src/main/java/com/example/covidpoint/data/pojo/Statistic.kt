@@ -1,6 +1,5 @@
-package com.example.covidpoint.pojo
+package com.example.covidpoint.data.pojo
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Statistic(

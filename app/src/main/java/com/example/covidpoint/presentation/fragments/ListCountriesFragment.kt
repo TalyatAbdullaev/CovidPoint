@@ -1,14 +1,14 @@
-package com.example.covidpoint.fragments
+package com.example.covidpoint.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.covidpoint.Presenter
-import com.example.covidpoint.adapters.CountryListAdapter
+import com.example.covidpoint.presentation.Presenter
+import com.example.covidpoint.presentation.adapters.CountryListAdapter
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
-import com.example.covidpoint.pojo.Country
+import com.example.covidpoint.data.pojo.Country
 
 class ListCountriesFragment : Fragment() {
     private var _binding: FragmentCountiresListBinding? = null

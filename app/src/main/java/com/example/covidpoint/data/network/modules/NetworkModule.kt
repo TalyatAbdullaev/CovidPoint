@@ -1,7 +1,7 @@
-package com.example.covidpoint.networkutils.modules
+package com.example.covidpoint.data.network.modules
 
 import dagger.Module
-import com.example.covidpoint.networkutils.NetworkUtils
+import com.example.covidpoint.data.network.NetworkUtils
 import dagger.Provides
 
 

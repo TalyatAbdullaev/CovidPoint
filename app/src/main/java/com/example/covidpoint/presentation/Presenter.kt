@@ -1,8 +1,8 @@
-package com.example.covidpoint
+package com.example.covidpoint.presentation
 
 import android.util.Log
-import com.example.covidpoint.api.ApiFactory
-import com.example.covidpoint.pojo.Country
+import com.example.covidpoint.data.network.api.ApiFactory
+import com.example.covidpoint.data.pojo.Country
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
