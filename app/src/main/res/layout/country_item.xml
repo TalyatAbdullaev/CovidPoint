@@ -1,99 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivFlag"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvCountryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFlag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivFlag"
+            tools:text="США" />
+
+        <TextView
+            android:id="@+id/tvConfirmedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Подтверждено"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@+id/ivFlag" />
+
+        <TextView
+            android:id="@+id/tvConfirmedNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
+            tools:text="1000000" />
+
+        <TextView
+            android:id="@+id/tvConfirmedIncrease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#868686"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvConfirmedNum"
+            app:layout_constraintEnd_toEndOf="@+id/ivFlag"
+            app:layout_constraintStart_toStartOf="@+id/ivFlag"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
+            tools:text="+5000" />
+
+        <ProgressBar
+            android:id="@+id/pbConfirmed"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:progressDrawable="@drawable/confirmed_progress_bar_color"
+            app:layout_constraintEnd_toEndOf="@+id/ivFlag"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum"
+            tools:progress="60" />
 
 
-    <ImageView
-        android:id="@+id/ivFlag"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/childLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:el_expanded="true"
+            app:layout_constraintEnd_toEndOf="@+id/ivFlag"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@id/pbConfirmed">
 
-    <TextView
-        android:id="@+id/tvCountryName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/ivFlag"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ivFlag"
-        tools:text="США" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvConfirmedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Подтверждено"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFlag" />
+                <TextView
+                    android:id="@+id/tvDeathsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Смертельныые случаи"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tvConfirmedNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
-        tools:text="1000000" />
+                <TextView
+                    android:id="@+id/tvRecoveredNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    tools:text="1000000" />
 
-    <TextView
-        android:id="@+id/tvDeathsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Смертельныые случаи"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum" />
+                <ProgressBar
+                    android:id="@+id/pbDeaths"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="8dp"
+                    android:progressDrawable="@drawable/deaths_progress_bar_color"
+                    app:layout_constraintEnd_toEndOf="@+id/ivFlag"
+                    app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum"
+                    tools:progress="60" />
 
-    <TextView
-        android:id="@+id/tvDeathsNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeathsLabel"
-        tools:text="1000000" />
+                <TextView
+                    android:id="@+id/tvRecoveredLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Выздоровевшие"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tvRecoveredLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Выздоровевшие"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeathsNum" />
+                <TextView
+                    android:id="@+id/tvDeathsNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    tools:text="1000000" />
 
-    <TextView
-        android:id="@+id/tvRecoveredNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecoveredLabel"
-        tools:text="1000000" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ProgressBar
+                    android:id="@+id/pbRecovered"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="8dp"
+                    android:progressDrawable="@drawable/recovered_progress_bar_color"
+                    app:layout_constraintEnd_toEndOf="@+id/ivFlag"
+                    app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum"
+                    tools:progress="60" />
+
+                <TextView
+                    android:id="@+id/tvDynamicLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Динамика заражения"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

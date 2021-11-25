@@ -6,8 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.covidpoint.presentation.fragments.ListCountriesFragment
 import com.example.covidpoint.presentation.fragments.MapCountriesFragment
 
-class FragmentsAdapter(fragmentActivity: FragmentActivity) :
-    FragmentStateAdapter(fragmentActivity) {
+class FragmentsAdapter(fragment: Fragment) :
+    FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 2
 

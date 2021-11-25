@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/layout/country_item.xml" value="0.33" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/drawable/confirmed_progress_bar_color.xml" value="0.2846153846153846" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/drawable/deaths_progress_bar_color.xml" value="0.2846153846153846" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/drawable/recovered_progress_bar_color.xml" value="0.2846153846153846" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/layout/country_item.xml" value="0.25" />
+        <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/layout/fragment_base.xml" value="0.27291666666666664" />
         <entry key="..\:/Android Projects/CovidPoint/app/src/main/res/layout/second_country_layout.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/usr/AndroidStudioProjects/CovidPoint/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/usr/AndroidStudioProjects/CovidPoint/app/src/main/res/layout/country_item.xml" value="0.36666666666666664" />

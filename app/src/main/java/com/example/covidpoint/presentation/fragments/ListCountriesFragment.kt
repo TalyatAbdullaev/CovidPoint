@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.covidpoint.presentation.Presenter
+import com.example.covidpoint.presentation.presenter.Presenter
 import com.example.covidpoint.presentation.adapters.CountryListAdapter
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.data.pojo.Country

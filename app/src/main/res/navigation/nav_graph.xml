@@ -20,4 +20,9 @@
         android:name="com.example.covidpoint.presentation.fragments.MapCountriesFragment"
         android:label="fragment_countires_map"
         tools:layout="@layout/fragment_countires_map" />
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.covidpoint.BaseFragment"
+        android:label="fragment_base"
+        tools:layout="@layout/fragment_base" />
 </navigation>
