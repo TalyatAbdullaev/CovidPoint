@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.covidpoint.databinding.FragmentCountiresMapBinding
+import moxy.MvpAppCompatFragment
 
 class MapCountriesFragment : Fragment() {
     private var _binding: FragmentCountiresMapBinding? = null

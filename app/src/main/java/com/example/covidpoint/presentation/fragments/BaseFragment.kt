@@ -1,19 +1,22 @@
 package com.example.covidpoint.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.example.covidpoint.R
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentBaseBinding
+import com.example.covidpoint.di.App
 import com.example.covidpoint.presentation.adapters.FragmentsAdapter
 import com.example.covidpoint.presentation.presenter.MainView
 import com.example.covidpoint.presentation.presenter.Presenter
 import com.google.android.material.tabs.TabLayoutMediator
 import moxy.MvpAppCompatFragment
-import moxy.presenter.InjectPresenter
+import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 
 class BaseFragment : MvpAppCompatFragment(), MainView {
@@ -21,8 +24,14 @@ class BaseFragment : MvpAppCompatFragment(), MainView {
     private val binding get() = _binding!!
     private val tabIcons = listOf(R.drawable.ic_map, R.drawable.ic_list)
 
-    @InjectPresenter
-    lateinit var presenter: Presenter
+    @Inject
+    lateinit var presenterProvider: Provider<Presenter>
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        App.graph.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +45,6 @@ class BaseFragment : MvpAppCompatFragment(), MainView {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewPager()
-
-
-
-
-
-        binding.btnNavigate.setOnClickListener {
-            findNavController().navigate(R.id.baseFragment)
-        }
     }
 
     private fun setupViewPager() {
@@ -53,11 +54,16 @@ class BaseFragment : MvpAppCompatFragment(), MainView {
         }.attach()
     }
 
-    override fun showCountries(countries: List<Country>) {
+    override fun getCountries(countries: List<Country>) {
+        Log.d("TAG", "отработало - " + childFragmentManager.fragments.size)
 
+        val listCountriesFragment =
+            childFragmentManager.findFragmentById(R.id.listCountriesFragment) as ListCountriesFragment
+
+        //listCountriesFragment.showListCountries(countries)
     }
 
-    override fun showCountryStatistic(country: Country) {
+    override fun getCountryStatistic(country: Country) {
         TODO("Not yet implemented")
     }
 }

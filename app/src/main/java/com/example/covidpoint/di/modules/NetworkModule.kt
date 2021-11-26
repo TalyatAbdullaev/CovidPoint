@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 @Module
 class NetworkModule {
+
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -33,7 +34,7 @@ class NetworkModule {
     fun provideApiService (retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
-    @Provides
+    /*@Provides
     fun provideSetFlagIntoIV(context: Context, imageView: ImageView, photoUrl: String) {
         Glide.with(context)
             .asBitmap()
@@ -61,5 +62,5 @@ class NetworkModule {
             })
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)
-    }
+    }*/
 }

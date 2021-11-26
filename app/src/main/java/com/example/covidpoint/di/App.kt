@@ -2,6 +2,7 @@ package com.example.covidpoint.di
 
 import android.app.Application
 import com.example.covidpoint.di.components.AppComponent
+import com.example.covidpoint.di.components.DaggerAppComponent
 
 class App : Application() {
     companion object {
