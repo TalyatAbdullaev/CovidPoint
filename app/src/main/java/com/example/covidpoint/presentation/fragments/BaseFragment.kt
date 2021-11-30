@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.covidpoint.R
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentBaseBinding
@@ -48,7 +51,11 @@ class BaseFragment : MvpAppCompatFragment(), MainView {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = FragmentsAdapter(this)
+        val viewPager = binding.viewPager
+
+        viewPager.offscreenPageLimit = 2
+
+        viewPager.adapter = FragmentsAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager, true) { tab, position ->
             tab.setIcon(tabIcons[position])
         }.attach()
@@ -58,10 +65,12 @@ class BaseFragment : MvpAppCompatFragment(), MainView {
         Log.d("TAG", "отработало - " + childFragmentManager.fragments.size)
 
         val listCountriesFragment =
-            childFragmentManager.findFragmentById(R.id.listCountriesFragment) as ListCountriesFragment
+            childFragmentManager.fragments[1] as ListCountriesFragment
 
-        //listCountriesFragment.showListCountries(countries)
+        listCountriesFragment.showListCountries(countries)
     }
+
+
 
     override fun getCountryStatistic(country: Country) {
         TODO("Not yet implemented")

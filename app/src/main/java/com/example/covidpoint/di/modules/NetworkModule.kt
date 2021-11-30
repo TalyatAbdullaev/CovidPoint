@@ -33,34 +33,4 @@ class NetworkModule {
     @Provides
     fun provideApiService (retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
-
-    /*@Provides
-    fun provideSetFlagIntoIV(context: Context, imageView: ImageView, photoUrl: String) {
-        Glide.with(context)
-            .asBitmap()
-            .load(photoUrl)
-            .circleCrop()
-            .addListener(object : RequestListener<Bitmap> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("Not yet implemented")
-                }
-            })
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(imageView)
-    }*/
 }

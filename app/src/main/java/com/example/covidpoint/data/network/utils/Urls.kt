@@ -5,5 +5,5 @@ object Urls {
     const val COUNTRY_FLAG_URL = "https://flagcdn.com/120x90/%s.png"
 
     const val GET_COUNTRIES_ENDPOINT = "v2/locations"
-    const val GET_COUNTRY_BY_ID_ENDPOINT = "v2/locations{id}"
+    const val GET_COUNTRY_BY_ID_ENDPOINT = "v2/locations/{id}"
 }

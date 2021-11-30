@@ -1,21 +1,17 @@
 package com.example.covidpoint.presentation.adapters
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.Glide.with
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import com.example.covidpoint.R
 import com.example.covidpoint.data.network.utils.Urls
-import com.example.covidpoint.databinding.CountryItemBinding
 import com.example.covidpoint.data.pojo.Country
+import com.example.covidpoint.databinding.CountryItemBinding
+import java.util.*
 
 class CountryListAdapter(private val countries: List<Country>) :
     RecyclerView.Adapter<CountryListAdapter.CountryListViewHolder>() {
@@ -30,46 +26,45 @@ class CountryListAdapter(private val countries: List<Country>) :
     override fun onBindViewHolder(holder: CountryListViewHolder, position: Int) {
         with(holder) {
             with(countries[position]) {
-                val countryName = binding.tvCountryName
-                val confirmed = binding.tvConfirmedNum
-                val imageView = binding.ivFlag
-                val flagUrl: String = String.format(Urls.COUNTRY_FLAG_URL, this.countryCode)
+                binding.tvCountryName.text = this.country
+
+                binding.tvConfirmedNum.text = this.latest?.confirmed.toString()
+                binding.tvDeathsNum.text = this.latest?.deaths.toString()
+                binding.tvRecoveredNum.text = this.latest?.recovered.toString()
+
+
+                val flagUrl: String =
+                    String.format(
+                        Urls.COUNTRY_FLAG_URL,
+                        this.countryCode.toString().lowercase(Locale.getDefault())
+                    )
                 Log.d("TAG", "flagUrl = " + flagUrl)
 
-                countryName.text = this.country
-                confirmed.text = this.latest?.confirmed.toString()
-                setFlagIntoIV(holder.itemView.context, imageView, flagUrl)
+                setFlagIntoIV(binding.ivFlag, flagUrl)
+
+                binding.btnDetailed.setOnClickListener {
+                    val child = binding.childLayout
+                    if (child.isExpanded) {
+                        child.isExpanded = false
+                        binding.btnDetailed.text =
+                            holder.itemView.resources.getString(R.string.btn_detail)
+                    } else {
+                        child.isExpanded = true
+                        binding.btnDetailed.text =
+                            holder.itemView.resources.getString(R.string.btn_hide)
+                    }
+                }
             }
         }
     }
 
     override fun getItemCount(): Int = countries.size
 
-    private fun setFlagIntoIV(context: Context, imageView: ImageView, photoUrl: String) {
-        Glide.with(context)
+    private fun setFlagIntoIV(imageView: ImageView, photoUrl: String) {
+        with(imageView.context)
             .asBitmap()
             .load(photoUrl)
             .circleCrop()
-            .addListener(object : RequestListener<Bitmap> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("Not yet implemented")
-                }
-            })
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)
     }

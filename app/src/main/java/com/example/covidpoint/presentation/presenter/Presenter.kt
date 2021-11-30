@@ -47,7 +47,6 @@ class Presenter @Inject constructor(
     }
 
     override fun onFirstViewAttach() {
-        Log.d("TAG", "onFirstViewAttach")
         getCountries()
     }
 
