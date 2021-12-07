@@ -1,11 +1,15 @@
 package com.example.covidpoint.data.pojo
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Coordinates(
     @SerializedName("latitude")
-    val latitude: String?,
+    val latitude: String,
 
     @SerializedName("longitude")
-    val longitude: String?
-)
+    val longitude: String
+) : Parcelable

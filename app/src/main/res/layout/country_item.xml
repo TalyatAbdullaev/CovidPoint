@@ -72,19 +72,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
                 tools:text="1000000" />
 
-            <TextView
-                android:id="@+id/tvConfirmedIncrease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#868686"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tvConfirmedNum"
-                app:layout_constraintEnd_toEndOf="@+id/ivFlag"
-                app:layout_constraintStart_toStartOf="@+id/ivFlag"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
-                tools:text="+5000" />
-
             <ProgressBar
                 android:id="@+id/pbConfirmed"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -139,7 +126,8 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="16dp"
                     android:progressDrawable="@drawable/deaths_progress_bar_color"
                     tools:progress="60" />
 
@@ -165,7 +153,8 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="16dp"
                     android:progressDrawable="@drawable/recovered_progress_bar_color"
                     tools:progress="60" />
 
@@ -176,6 +165,10 @@
                     android:text="Динамика заражения"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </net.cachapa.expandablelayout.ExpandableLayout>
 

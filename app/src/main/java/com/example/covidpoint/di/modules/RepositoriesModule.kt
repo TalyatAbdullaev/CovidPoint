@@ -1,10 +1,13 @@
 package com.example.covidpoint.di.modules
 
+import com.example.covidpoint.data.database.CountriesDao
 import com.example.covidpoint.data.network.api.ApiService
-import com.example.covidpoint.data.repositories.GetCountriesRepositoryImpl
-import com.example.covidpoint.data.repositories.GetCountryStatisticRepositoryImpl
-import com.example.covidpoint.data.repositories.interfaces.GetCountriesRepository
-import com.example.covidpoint.data.repositories.interfaces.GetCountryStatisticRepository
+import com.example.covidpoint.data.repositories.DatabaseRepositoryImpl
+import com.example.covidpoint.data.repositories.MainRepositoryImpl
+import com.example.covidpoint.data.repositories.NetworkRepositoryImpl
+import com.example.covidpoint.data.repositories.interfaces.DatabaseRepository
+import com.example.covidpoint.data.repositories.interfaces.MainRepository
+import com.example.covidpoint.data.repositories.interfaces.NetworkRepository
 import dagger.Module
 import dagger.Provides
 
@@ -12,10 +15,17 @@ import dagger.Provides
 class RepositoriesModule {
 
     @Provides
-    fun provideGetCountriesRepository(apiService: ApiService): GetCountriesRepository =
-        GetCountriesRepositoryImpl(apiService)
+    fun provideDatabaseRepository(dao: CountriesDao): DatabaseRepository =
+        DatabaseRepositoryImpl(dao)
 
     @Provides
-    fun provideGetCountryStatisticRepository(apiService: ApiService): GetCountryStatisticRepository =
-        GetCountryStatisticRepositoryImpl(apiService)
+    fun provideNetworkRepository(apiService: ApiService): NetworkRepository =
+        NetworkRepositoryImpl(apiService)
+
+    @Provides
+    fun provideMainRepository(
+        networkRepository: NetworkRepository,
+        databaseRepository: DatabaseRepository
+    ): MainRepository =
+        MainRepositoryImpl(networkRepository, databaseRepository)
 }

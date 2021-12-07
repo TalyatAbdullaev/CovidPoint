@@ -1,4 +1,4 @@
-package com.example.covidpoint.presentation.adapters
+package com.example.covidpoint.presentation.fragments.listcountries
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +13,10 @@ import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.CountryItemBinding
 import java.util.*
 
-class CountryListAdapter(private val countries: List<Country>) :
-    RecyclerView.Adapter<CountryListAdapter.CountryListViewHolder>() {
+class ListCountriesAdapter(private val countries: List<Country>) :
+    RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
+    private var aboutListener: (Int) -> Unit = {}
+
     inner class CountryListViewHolder(val binding: CountryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -28,10 +30,19 @@ class CountryListAdapter(private val countries: List<Country>) :
             with(countries[position]) {
                 binding.tvCountryName.text = this.country
 
-                binding.tvConfirmedNum.text = this.latest?.confirmed.toString()
-                binding.tvDeathsNum.text = this.latest?.deaths.toString()
-                binding.tvRecoveredNum.text = this.latest?.recovered.toString()
+                binding.tvConfirmedNum.text = this.latest.confirmed.toString()
+                binding.tvDeathsNum.text = this.latest.deaths.toString()
+                binding.tvRecoveredNum.text = this.latest.recovered.toString()
 
+                val confirmed = this.latest.confirmed
+                val deaths = this.latest.deaths
+                val recovered = this.latest.recovered
+
+                val sum = confirmed + deaths + recovered
+
+                binding.pbConfirmed.progress = setProgress(confirmed, sum)
+                binding.pbDeaths.progress = setProgress(deaths, sum)
+                binding.pbRecovered.progress = setProgress(recovered, sum)
 
                 val flagUrl: String =
                     String.format(
@@ -52,6 +63,7 @@ class CountryListAdapter(private val countries: List<Country>) :
                         child.isExpanded = true
                         binding.btnDetailed.text =
                             holder.itemView.resources.getString(R.string.btn_hide)
+                        aboutListener.invoke(adapterPosition)
                     }
                 }
             }
@@ -69,4 +81,5 @@ class CountryListAdapter(private val countries: List<Country>) :
             .into(imageView)
     }
 
+    private fun setProgress(value: Int, sum: Int): Int = (value/sum)*100
 }

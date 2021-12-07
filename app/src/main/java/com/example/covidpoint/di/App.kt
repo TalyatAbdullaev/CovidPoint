@@ -3,6 +3,7 @@ package com.example.covidpoint.di
 import android.app.Application
 import com.example.covidpoint.di.components.AppComponent
 import com.example.covidpoint.di.components.DaggerAppComponent
+import com.example.covidpoint.di.modules.AppModule
 
 class App : Application() {
     companion object {
@@ -11,6 +12,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        graph = DaggerAppComponent.create()
+        graph = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 }
