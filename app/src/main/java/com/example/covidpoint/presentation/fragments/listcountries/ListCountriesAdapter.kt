@@ -15,7 +15,8 @@ import java.util.*
 
 class ListCountriesAdapter(private val countries: List<Country>) :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
-    private var aboutListener: (Int) -> Unit = {}
+
+    var onItemClickListener: OnItemClickListener? = null
 
     inner class CountryListViewHolder(val binding: CountryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -40,20 +41,22 @@ class ListCountriesAdapter(private val countries: List<Country>) :
 
                 val sum = confirmed + deaths + recovered
 
-                binding.pbConfirmed.progress = setProgress(confirmed, sum)
-                binding.pbDeaths.progress = setProgress(deaths, sum)
-                binding.pbRecovered.progress = setProgress(recovered, sum)
+                binding.pbConfirmed.progress = progressValue(confirmed, sum)
+                binding.pbDeaths.progress = progressValue(deaths, sum)
+                binding.pbRecovered.progress = progressValue(recovered, sum)
 
                 val flagUrl: String =
                     String.format(
                         Urls.COUNTRY_FLAG_URL,
-                        this.countryCode.toString().lowercase(Locale.getDefault())
+                        this.countryCode.lowercase(Locale.getDefault())
                     )
                 Log.d("TAG", "flagUrl = " + flagUrl)
 
                 setFlagIntoIV(binding.ivFlag, flagUrl)
 
                 binding.btnDetailed.setOnClickListener {
+                    onItemClickListener?.onItemClick(countries[position])
+
                     val child = binding.childLayout
                     if (child.isExpanded) {
                         child.isExpanded = false
@@ -63,7 +66,6 @@ class ListCountriesAdapter(private val countries: List<Country>) :
                         child.isExpanded = true
                         binding.btnDetailed.text =
                             holder.itemView.resources.getString(R.string.btn_hide)
-                        aboutListener.invoke(adapterPosition)
                     }
                 }
             }
@@ -81,5 +83,9 @@ class ListCountriesAdapter(private val countries: List<Country>) :
             .into(imageView)
     }
 
-    private fun setProgress(value: Int, sum: Int): Int = (value/sum)*100
+    private fun progressValue(value: Int, sum: Int): Int = (value/sum)*100
+
+    interface OnItemClickListener {
+        fun onItemClick(country: Country)
+    }
 }

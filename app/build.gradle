@@ -68,14 +68,13 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.2"
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
 
-
     //Navigation
     def navigation_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     //ExpandableLayout
-    implementation 'com.github.skydoves:expandablelayout:1.0.7'
+    implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 
     //Dagger2
     def dagger_version = "2.40.2"
@@ -97,5 +96,5 @@ dependencies {
     def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
-    //kapt "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

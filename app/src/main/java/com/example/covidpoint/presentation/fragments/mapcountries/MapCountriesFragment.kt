@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.covidpoint.data.network.utils.Urls
 import com.example.covidpoint.databinding.FragmentCountiresMapBinding
+import com.example.covidpoint.utils.AppUtils
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -30,7 +31,7 @@ class MapCountriesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MapKitFactory.setApiKey(Urls.YANDEX_API_KEY)
+        MapKitFactory.setApiKey(AppUtils.YANDEX_API_KEY)
         MapKitFactory.initialize(context)
     }
 
@@ -39,7 +40,7 @@ class MapCountriesFragment : Fragment() {
 
         yandexMap = binding.yandexMap
         yandexMap!!.getMap().move(
-            CameraPosition(Point(55.751574, 37.573856), 11.0f, 0.0f, 0.0f),
+            CameraPosition(Point(55.751574, 37.573856), 20.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 0F),
             null
         )

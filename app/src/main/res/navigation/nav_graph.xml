@@ -10,6 +10,11 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
     <fragment
+        android:id="@+id/containerFragment"
+        android:name="com.example.covidpoint.presentation.fragments.container.ContainerFragment"
+        android:label="fragment_container"
+        tools:layout="@layout/fragment_container" />
+    <fragment
         android:id="@+id/listCountriesFragment"
         android:name="com.example.covidpoint.presentation.fragments.listcountries.ListCountriesFragment"
         android:label="fragment_countires_list"
@@ -19,9 +24,4 @@
         android:name="com.example.covidpoint.presentation.fragments.mapcountries.MapCountriesFragment"
         android:label="fragment_countires_map"
         tools:layout="@layout/fragment_countires_map" />
-    <fragment
-        android:id="@+id/containerFragment"
-        android:name="com.example.covidpoint.presentation.fragments.container.ContainerFragment"
-        android:label="fragment_container"
-        tools:layout="@layout/fragment_container" />
 </navigation>

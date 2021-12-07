@@ -3,6 +3,7 @@ package com.example.covidpoint.di.modules
 import dagger.Module
 import android.app.Application
 import android.content.Context
+import com.example.covidpoint.di.App
 import dagger.Provides
 
 import javax.inject.Singleton
@@ -11,11 +12,9 @@ import javax.inject.Singleton
 
 
 @Module
-class AppModule(private val application: Application) {
+class AppModule(private val app: App) {
 
     @Provides
-    fun provideApplication():Application = application
+    fun provideApplication():App = app
 
-    @Provides
-    fun provideContext(application: Application): Context = application.applicationContext
 }

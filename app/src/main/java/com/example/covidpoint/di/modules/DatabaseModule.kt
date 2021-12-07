@@ -1,23 +1,24 @@
 package com.example.covidpoint.di.modules
 
-import android.content.Context
 import androidx.room.Room
 import com.example.covidpoint.data.database.CountriesDao
 import com.example.covidpoint.data.database.CountriesDatabase
+import com.example.covidpoint.di.App
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
 
     @Provides
-    fun provideCountriesDatabase(context: Context): CountriesDatabase =
+    fun provideCountriesDatabase(app: App): CountriesDatabase =
         Room.databaseBuilder(
-            context,
+            app,
             CountriesDatabase::class.java,
             "countries_database"
-        ).build()
+        )
+            //.allowMainThreadQueries()
+            .build()
 
     @Provides
     fun provideCountriesDao(db: CountriesDatabase): CountriesDao = db.countriesDao()

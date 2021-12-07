@@ -25,6 +25,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashInterface {
     private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.graph.inject(this)
         super.onCreate(savedInstanceState)
     }
 
