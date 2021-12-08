@@ -1,5 +1,6 @@
 package com.example.covidpoint.data.repositories
 
+import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.pojo.Response
 import com.example.covidpoint.data.repositories.interfaces.DatabaseRepository
@@ -18,10 +19,18 @@ class MainRepositoryImpl @Inject constructor(
     override fun getDataFromNetwork(): Single<Response> =
         networkRepository.getCountries()
 
-    override fun getDataFromDB(): Single<List<Country>> =
+    override fun getDataFromDB(): Single<List<CountryEntity>> =
         databaseRepository.getCountries()
 
-    override fun addDataToDB(countries: List<Country>): Completable =
+    override fun addDataToDB(countries: List<CountryEntity>): Completable =
         databaseRepository.insertCountries(countries)
 
+    override fun getDataFromNetworkById(id: Int): Single<Country> =
+        networkRepository.getCountryStatistic(id)
+
+    override fun getDataFromDBByCoordinates(
+        longitude: Double,
+        latitude: Double
+    ): Single<CountryEntity> =
+        databaseRepository.getCountryByCoordinates(longitude, latitude)
 }

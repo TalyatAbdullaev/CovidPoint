@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.covidpoint.R
+import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.network.utils.Urls
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.CountryItemBinding
 import java.util.*
 
-class ListCountriesAdapter(private val countries: List<Country>) :
+class ListCountriesAdapter(private val countries: List<CountryEntity>) :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
@@ -31,13 +32,13 @@ class ListCountriesAdapter(private val countries: List<Country>) :
             with(countries[position]) {
                 binding.tvCountryName.text = this.country
 
-                binding.tvConfirmedNum.text = this.latest.confirmed.toString()
-                binding.tvDeathsNum.text = this.latest.deaths.toString()
-                binding.tvRecoveredNum.text = this.latest.recovered.toString()
+                val confirmed = this.confirmed
+                val deaths = this.deaths
+                val recovered = this.recovered
 
-                val confirmed = this.latest.confirmed
-                val deaths = this.latest.deaths
-                val recovered = this.latest.recovered
+                binding.tvConfirmedNum.text = confirmed.toString()
+                binding.tvDeathsNum.text = deaths.toString()
+                binding.tvRecoveredNum.text = recovered.toString()
 
                 val sum = confirmed + deaths + recovered
 
@@ -86,6 +87,6 @@ class ListCountriesAdapter(private val countries: List<Country>) :
     private fun progressValue(value: Int, sum: Int): Int = (value/sum)*100
 
     interface OnItemClickListener {
-        fun onItemClick(country: Country)
+        fun onItemClick(country: CountryEntity)
     }
 }

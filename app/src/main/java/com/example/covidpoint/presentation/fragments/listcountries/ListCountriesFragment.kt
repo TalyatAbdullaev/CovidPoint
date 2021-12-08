@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
@@ -18,6 +19,7 @@ import javax.inject.Provider
 class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     private var _binding: FragmentCountiresListBinding? = null
     private val binding get() = _binding!!
+    private var adapter: ListCountriesAdapter? = null
 
     @Inject
     lateinit var presenterProvider: Provider<ListCountriesPresenter>
@@ -39,11 +41,13 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ListCountriesAdapter(listOf())
+        adapter = ListCountriesAdapter(listOf())
         binding.recyclerView.adapter = adapter
-        adapter.onItemClickListener = object : ListCountriesAdapter.OnItemClickListener{
-            override fun onItemClick(country: Country) {
-                presenter.
+        adapter?.onItemClickListener = object : ListCountriesAdapter.OnItemClickListener {
+            override fun onItemClick(country: CountryEntity) {
+                Log.d("TAG", "country -" + country.country)
+                val countryId: Int = country.id
+                presenter.getCountryStatistic(countryId)
             }
         }
     }
@@ -53,7 +57,12 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         _binding = null
     }
 
-    override fun showCountries(countries: List<Country>) {
+
+    override fun showCountries(countries: List<CountryEntity>) {
         binding.recyclerView.adapter = ListCountriesAdapter(countries)
+    }
+
+    override fun showCountryStatistic(country: Country) {
+        Log.d("TAG", "country = " + country.country)
     }
 }
