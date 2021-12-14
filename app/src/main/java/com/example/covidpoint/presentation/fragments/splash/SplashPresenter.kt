@@ -1,5 +1,6 @@
 package com.example.covidpoint.presentation.fragments.splash
 
+import android.util.Log
 import com.example.covidpoint.data.database.mapper.CountryMapper
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -17,7 +18,14 @@ class SplashPresenter @Inject constructor(
 
     private fun getCountries() {
         disposable.add(mainRepository.getDataFromNetwork()
-            .map { it.locations.map { mapper.mapToEntity(it) } }
+            .map {
+                it.locations.mapNotNull {
+                    if (it.coordinates.latitude.isNotEmpty() && it.coordinates.longitude.isNotEmpty()) {
+                        mapper.mapToEntity(it)
+                    } else
+                        null
+                }
+            }
             .flatMapCompletable { mainRepository.addDataToDB(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

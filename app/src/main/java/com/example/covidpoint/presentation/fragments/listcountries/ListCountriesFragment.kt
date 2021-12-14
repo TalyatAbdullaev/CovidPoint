@@ -5,12 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
-import com.example.covidpoint.presentation.fragments.splash.SplashPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -41,7 +39,7 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ListCountriesAdapter(listOf())
+        adapter = ListCountriesAdapter()
         binding.recyclerView.adapter = adapter
         adapter?.onItemClickListener = object : ListCountriesAdapter.OnItemClickListener {
             override fun onItemClick(country: CountryEntity) {
@@ -57,9 +55,8 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         _binding = null
     }
 
-
     override fun showCountries(countries: List<CountryEntity>) {
-        binding.recyclerView.adapter = ListCountriesAdapter(countries)
+        adapter?.countries = countries
     }
 
     override fun showCountryStatistic(country: Country) {

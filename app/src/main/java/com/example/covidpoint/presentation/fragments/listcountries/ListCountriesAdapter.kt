@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,10 +15,18 @@ import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.CountryItemBinding
 import java.util.*
 
-class ListCountriesAdapter(private val countries: List<CountryEntity>) :
+class ListCountriesAdapter :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
+
+    var countries: List<CountryEntity> = listOf()
+        set(newList) {
+            val diffCallback = ListCountriesDiffUtil(field, newList)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+            field = newList
+            diffResult.dispatchUpdatesTo(this)
+        }
 
     inner class CountryListViewHolder(val binding: CountryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -56,8 +65,6 @@ class ListCountriesAdapter(private val countries: List<CountryEntity>) :
                 setFlagIntoIV(binding.ivFlag, flagUrl)
 
                 binding.btnDetailed.setOnClickListener {
-                    onItemClickListener?.onItemClick(countries[position])
-
                     val child = binding.childLayout
                     if (child.isExpanded) {
                         child.isExpanded = false
@@ -67,6 +74,8 @@ class ListCountriesAdapter(private val countries: List<CountryEntity>) :
                         child.isExpanded = true
                         binding.btnDetailed.text =
                             holder.itemView.resources.getString(R.string.btn_hide)
+
+                        onItemClickListener?.onItemClick(countries[position])
                     }
                 }
             }
@@ -84,7 +93,7 @@ class ListCountriesAdapter(private val countries: List<CountryEntity>) :
             .into(imageView)
     }
 
-    private fun progressValue(value: Int, sum: Int): Int = (value/sum)*100
+    private fun progressValue(value: Int, sum: Int): Int = (value / sum) * 100
 
     interface OnItemClickListener {
         fun onItemClick(country: CountryEntity)

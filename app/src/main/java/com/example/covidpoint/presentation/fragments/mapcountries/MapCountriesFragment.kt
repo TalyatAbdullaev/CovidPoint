@@ -75,6 +75,10 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface {
             it!!.map.mapObjects.addTapListener(object : MapObjectTapListener {
                 override fun onMapObjectTap(p0: MapObject, p1: Point): Boolean {
                     presenter.getCountryByPoint(p1)
+                    Log.d("TAG", "tap")
+                    Log.d("TAG", "point - " + p0.zIndex)
+
+
                     return true
                 }
             })
@@ -99,7 +103,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface {
     }
 
     override fun showCountryStatistic(country: Country) {
-
+        Log.d("TAG", "country statistic - " + country.country)
     }
 
     override fun showCountries(countries: List<CountryEntity>) {
@@ -108,13 +112,11 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface {
             Point(it.latitude, it.longitude)
         }
 
+
         yandexMap.let {
             it!!.map.mapObjects.addPlacemarks(
                 points, ImageProvider.fromResource(context, R.drawable.ic_mark), IconStyle()
             )
         }
-
     }
-
-
 }
