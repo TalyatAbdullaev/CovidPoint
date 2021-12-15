@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class Timelines(
 
-    @SerializedName("timelines")
-    val confirmed: Confirmed?
+    @SerializedName("confirmed")
+    val confirmed: Confirmed
 )

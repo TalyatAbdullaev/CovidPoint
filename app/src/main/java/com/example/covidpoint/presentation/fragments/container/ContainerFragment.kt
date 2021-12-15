@@ -30,6 +30,7 @@ class ContainerFragment : MvpAppCompatFragment() {
     }
 
     private fun setupViewPager() {
+        binding.viewPager.isUserInputEnabled = false
         binding.viewPager.offscreenPageLimit = 2
 
         binding.viewPager.adapter = FragmentsAdapter(this)

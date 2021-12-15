@@ -11,9 +11,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.network.utils.Urls
-import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.CountryItemBinding
-import java.util.*
+import com.github.mikephil.charting.data.BarEntry
 
 class ListCountriesAdapter :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
@@ -58,9 +57,8 @@ class ListCountriesAdapter :
                 val flagUrl: String =
                     String.format(
                         Urls.COUNTRY_FLAG_URL,
-                        this.countryCode.lowercase(Locale.getDefault())
+                        this.countryCode.lowercase()
                     )
-                Log.d("TAG", "flagUrl = " + flagUrl)
 
                 setFlagIntoIV(binding.ivFlag, flagUrl)
 

@@ -2,7 +2,6 @@ package com.example.covidpoint.presentation.fragments.mapcountries
 
 import android.util.Log
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import com.yandex.mapkit.geometry.Point
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -14,7 +13,7 @@ class MapCountiresPresenter @Inject constructor(private val mainRepository: Main
 
     private val disposable = CompositeDisposable()
 
-    fun getCountriesFromDB() {
+    private fun getCountriesFromDB() {
         disposable.add(
             mainRepository.getDataFromDB()
                 .subscribeOn(Schedulers.io())
@@ -22,7 +21,7 @@ class MapCountiresPresenter @Inject constructor(private val mainRepository: Main
                 .subscribe({
                     viewState.showCountries(it)
                 }, {
-
+                    Log.d("TAG", "error - " + it.message)
                 })
         )
     }
@@ -30,26 +29,15 @@ class MapCountiresPresenter @Inject constructor(private val mainRepository: Main
     fun getCountryStatistic(id: Int) {
         disposable.add(
             mainRepository.getDataFromNetworkById(id)
+                .map { it.location }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    Log.d("TAG", "country - " + it.country)
                     viewState.showCountryStatistic(it)
                 }, {
-
+                    Log.d("TAG", "error - " + it.message)
                 })
-        )
-    }
-
-    fun getCountryByPoint(point: Point) {
-        disposable.add(mainRepository.getDataFromDBByCoordinates(point.longitude, point.latitude)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.d("TAG", it.toString())
-                getCountryStatistic(it.id)
-            }, {
-
-            })
         )
     }
 

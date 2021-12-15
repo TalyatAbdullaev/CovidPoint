@@ -16,13 +16,12 @@ class ListCountriesPresenter @Inject constructor(private val mainRepository: Mai
 
     private val disposable = CompositeDisposable()
 
-    fun getCountriesFromDB() {
+    private fun getCountriesFromDB() {
         disposable.add(mainRepository.getDataFromDB()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("TAG", "countries from db - " + it.toString())
-
                 viewState.showCountries(it)
             }, {
 
@@ -32,12 +31,14 @@ class ListCountriesPresenter @Inject constructor(private val mainRepository: Mai
 
     fun getCountryStatistic(id: Int) {
         disposable.add(mainRepository.getDataFromNetworkById(id)
+            .map { it.location }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                Log.d("TAG", "country - " + it.country)
                 viewState.showCountryStatistic(it)
             }, {
-
+                Log.d("TAG", "error - " + it.message)
             })
         )
     }

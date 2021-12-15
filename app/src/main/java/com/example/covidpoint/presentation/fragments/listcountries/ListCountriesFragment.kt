@@ -60,6 +60,16 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     }
 
     override fun showCountryStatistic(country: Country) {
-        Log.d("TAG", "country = " + country.country)
+        Log.d("TAG", "country = " + country.timelines?.confirmed?.timeline)
+
+
+        val dynamicConfirmedKeys: List<String> = country.timelines.let {
+            it!!.confirmed.timeline.keys.toList()
+        }
+        val dynamicConfirmedValues: List<Int> = country.timelines.let {
+            it!!.confirmed.timeline.values.toList()
+        }
+
+        Log.d("TAG","keys - " + dynamicConfirmedKeys)
     }
 }
