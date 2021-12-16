@@ -1,6 +1,5 @@
 package com.example.covidpoint.presentation.fragments.listcountries
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,8 +10,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.network.utils.Urls
+import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.CountryItemBinding
-import com.github.mikephil.charting.data.BarEntry
 
 class ListCountriesAdapter :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
@@ -38,6 +37,7 @@ class ListCountriesAdapter :
     override fun onBindViewHolder(holder: CountryListViewHolder, position: Int) {
         with(holder) {
             with(countries[position]) {
+
                 binding.tvCountryName.text = this.country
 
                 val confirmed = this.confirmed
@@ -91,7 +91,13 @@ class ListCountriesAdapter :
             .into(imageView)
     }
 
-    private fun progressValue(value: Int, sum: Int): Int = (value / sum) * 100
+    private fun progressValue(value: Int, sum: Int): Int {
+        val value1 = value.toDouble()
+        val value2 = sum.toDouble()
+
+        val progress: Double = value1/value2 * 100
+        return progress.toInt()
+    }
 
     interface OnItemClickListener {
         fun onItemClick(country: CountryEntity)

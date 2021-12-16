@@ -9,11 +9,13 @@
     </item>
 
     <item android:id="@android:id/progress">
-        <shape>
-            <corners android:radius="5dp" />
-            <gradient
-                android:endColor="@color/progress_bar_confirmed_end"
-                android:startColor="@color/progress_bar_confirmed_start" />
-        </shape>
+        <clip>
+            <shape>
+                <corners android:radius="5dp" />
+                <gradient
+                    android:endColor="@color/progress_bar_confirmed_end"
+                    android:startColor="@color/progress_bar_confirmed_start" />
+            </shape>
+        </clip>
     </item>
 </layer-list>

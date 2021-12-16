@@ -35,7 +35,6 @@ class ListCountriesPresenter @Inject constructor(private val mainRepository: Mai
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.d("TAG", "country - " + it.country)
                 viewState.showCountryStatistic(it)
             }, {
                 Log.d("TAG", "error - " + it.message)

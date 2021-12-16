@@ -4,6 +4,8 @@ import android.app.Application
 import com.example.covidpoint.di.components.AppComponent
 import com.example.covidpoint.di.components.DaggerAppComponent
 import com.example.covidpoint.di.modules.AppModule
+import com.example.covidpoint.utils.AppUtils
+import com.yandex.mapkit.MapKitFactory
 
 class App : Application() {
     companion object {
@@ -12,6 +14,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MapKitFactory.setApiKey(AppUtils.YANDEX_API_KEY)
+
         graph = DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()

@@ -37,18 +37,9 @@ class SplashFragment : MvpAppCompatFragment(), SplashInterface {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.btnNavigate.setOnClickListener {
-            findNavController().navigate(R.id.containerFragment)
-        }
-    }
-
     override fun navigateToApp() {
         findNavController().navigate(R.id.containerFragment)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

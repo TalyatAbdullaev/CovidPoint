@@ -2,7 +2,7 @@ package com.example.covidpoint.utils
 
 object DateConverter {
     fun convertDate(date: String): String {
-        val dateParts = date.substring(10).split("-")
+        val dateParts = date.substring(0, 9).split("-")
         return dateParts[2] + " " + getMonthByNumber(dateParts[1].toInt()) + " " + dateParts[0]
     }
 
