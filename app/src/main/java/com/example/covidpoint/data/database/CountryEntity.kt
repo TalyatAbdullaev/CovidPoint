@@ -1,10 +1,11 @@
 package com.example.covidpoint.data.database
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "countries")
-data class CountryEntity(
+@Entity(tableName = DatabaseConstants.COUNTRIES_TABLE_NAME)
+data class CountryEntity @JvmOverloads constructor(
 
     @PrimaryKey
     val id: Int,
@@ -25,5 +26,8 @@ data class CountryEntity(
 
     val deaths: Int,
 
-    val recovered: Int
+    val recovered: Int,
+
+    @Ignore
+    var confirmedStats: Map<String, Int>? = null
 )

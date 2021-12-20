@@ -1,6 +1,9 @@
-package com.example.covidpoint.presentation.fragments.mapcountries
+package com.example.covidpoint.presentation.fragments.container.mapcountries
 
 import android.util.Log
+import com.example.covidpoint.data.database.CountryEntity
+import com.example.covidpoint.data.database.mapper.CountryMapper
+import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -8,7 +11,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class MapCountiresPresenter @Inject constructor(private val mainRepository: MainRepository) :
+class MapCountiresPresenter @Inject constructor(
+    private val mainRepository: MainRepository,
+    private val mapper: CountryMapper<Country, CountryEntity>
+) :
     MvpPresenter<MapCountriesInterface>() {
 
     private val disposable = CompositeDisposable()
@@ -30,6 +36,7 @@ class MapCountiresPresenter @Inject constructor(private val mainRepository: Main
         disposable.add(
             mainRepository.getDataFromNetworkById(id)
                 .map { it.location }
+                .map { mapper.mapToEntity(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

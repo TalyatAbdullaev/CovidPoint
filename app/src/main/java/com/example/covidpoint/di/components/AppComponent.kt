@@ -3,8 +3,8 @@ package com.example.covidpoint.di.components
 import com.example.covidpoint.di.modules.*
 import com.example.covidpoint.presentation.MainActivity
 import com.example.covidpoint.presentation.fragments.container.ContainerFragment
-import com.example.covidpoint.presentation.fragments.listcountries.ListCountriesFragment
-import com.example.covidpoint.presentation.fragments.mapcountries.MapCountriesFragment
+import com.example.covidpoint.presentation.fragments.container.listcountries.ListCountriesFragment
+import com.example.covidpoint.presentation.fragments.container.mapcountries.MapCountriesFragment
 import com.example.covidpoint.presentation.fragments.splash.SplashFragment
 import com.example.covidpoint.presentation.fragments.splash.SplashPresenter
 import dagger.Component
@@ -28,5 +28,5 @@ interface AppComponent {
     fun inject(mapCountriesFragment: MapCountriesFragment)
 
     //Presenters
-    fun inject(splashPresenter: SplashPresenter)
+//    fun inject(splashPresenter: SplashPresenter)
 }

@@ -1,9 +1,7 @@
-package com.example.covidpoint.presentation.fragments.mapcountries
+package com.example.covidpoint.presentation.fragments.container.mapcountries
 
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.data.pojo.Country
-import com.example.covidpoint.presentation.fragments.listcountries.ListCountriesInterface
-import com.yandex.mapkit.map.PlacemarkMapObject
+import com.example.covidpoint.presentation.fragments.container.listcountries.ListCountriesInterface
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -13,5 +11,5 @@ interface MapCountriesInterface : MvpView, ListCountriesInterface {
 
     override fun showCountries(countries: List<CountryEntity>)
 
-    override fun showCountryStatistic(country: Country)
+    override fun showCountryStatistic(country: CountryEntity)
 }

@@ -1,4 +1,4 @@
-package com.example.covidpoint.presentation.fragments.listcountries
+package com.example.covidpoint.presentation.fragments.container.listcountries
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.covidpoint.data.database.CountryEntity
@@ -23,9 +23,5 @@ class ListCountriesDiffUtil(
         val newItem: CountryEntity = newList[newItemPosition]
 
         return oldItem == newItem
-    }
-
-    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-        return super.getChangePayload(oldItemPosition, newItemPosition)
     }
 }

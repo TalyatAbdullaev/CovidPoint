@@ -10,6 +10,4 @@ interface DatabaseRepository {
     fun insertCountries(countries: List<CountryEntity>): Completable
 
     fun getCountries(): Single<List<CountryEntity>>
-
-    fun getCountryByCoordinates(longitude: Double, latitude: Double): Single<CountryEntity>
 }

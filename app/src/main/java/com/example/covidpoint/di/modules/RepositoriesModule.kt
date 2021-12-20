@@ -1,7 +1,7 @@
 package com.example.covidpoint.di.modules
 
 import com.example.covidpoint.data.database.CountriesDao
-import com.example.covidpoint.data.network.api.ApiService
+import com.example.covidpoint.data.network.services.CountryApiService
 import com.example.covidpoint.data.repositories.DatabaseRepositoryImpl
 import com.example.covidpoint.data.repositories.MainRepositoryImpl
 import com.example.covidpoint.data.repositories.NetworkRepositoryImpl
@@ -19,8 +19,8 @@ class RepositoriesModule {
         DatabaseRepositoryImpl(dao)
 
     @Provides
-    fun provideNetworkRepository(apiService: ApiService): NetworkRepository =
-        NetworkRepositoryImpl(apiService)
+    fun provideNetworkRepository(countryApiService: CountryApiService): NetworkRepository =
+        NetworkRepositoryImpl(countryApiService)
 
     @Provides
     fun provideMainRepository(

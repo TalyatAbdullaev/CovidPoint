@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.covidpoint.R
 import com.example.covidpoint.databinding.FragmentContainerBinding
-import com.example.covidpoint.presentation.adapters.FragmentsAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import moxy.MvpAppCompatFragment
 

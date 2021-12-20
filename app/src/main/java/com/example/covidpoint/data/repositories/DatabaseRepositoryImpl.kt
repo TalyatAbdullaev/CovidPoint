@@ -16,10 +16,4 @@ class DatabaseRepositoryImpl @Inject constructor(private val dao: CountriesDao) 
 
     override fun insertCountries(countries: List<CountryEntity>): Completable =
         dao.insertCountries(countries)
-
-    override fun getCountryByCoordinates(
-        longitude: Double,
-        latitude: Double
-    ): Single<CountryEntity> =
-        dao.getCountryByCoordinates(longitude, latitude)
 }

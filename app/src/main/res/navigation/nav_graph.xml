@@ -16,12 +16,12 @@
         tools:layout="@layout/fragment_container" />
     <fragment
         android:id="@+id/listCountriesFragment"
-        android:name="com.example.covidpoint.presentation.fragments.listcountries.ListCountriesFragment"
+        android:name="com.example.covidpoint.presentation.fragments.container.listcountries.ListCountriesFragment"
         android:label="fragment_countires_list"
         tools:layout="@layout/fragment_countires_list" />
     <fragment
         android:id="@+id/mapCountriesFragment"
-        android:name="com.example.covidpoint.presentation.fragments.mapcountries.MapCountriesFragment"
+        android:name="com.example.covidpoint.presentation.fragments.container.mapcountries.MapCountriesFragment"
         android:label="fragment_countires_map"
         tools:layout="@layout/fragment_countires_map" />
 </navigation>

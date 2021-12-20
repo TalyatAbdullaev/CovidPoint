@@ -1,7 +1,6 @@
-package com.example.covidpoint.presentation.fragments.listcountries
+package com.example.covidpoint.presentation.fragments.container.listcountries
 
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.data.pojo.Country
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -11,5 +10,5 @@ interface ListCountriesInterface: MvpView {
 
     fun showCountries(countries: List<CountryEntity>)
 
-    fun showCountryStatistic(country: Country)
+    fun showCountryStatistic(country: CountryEntity)
 }

@@ -1,4 +1,4 @@
-package com.example.covidpoint.presentation.fragments.listcountries
+package com.example.covidpoint.presentation.fragments.container.listcountries
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
 import moxy.MvpAppCompatFragment
@@ -17,7 +16,7 @@ import javax.inject.Provider
 class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     private var _binding: FragmentCountiresListBinding? = null
     private val binding get() = _binding!!
-    private var adapter: ListCountriesAdapter? = null
+    private val adapter: ListCountriesAdapter by lazy { ListCountriesAdapter() }
 
     @Inject
     lateinit var presenterProvider: Provider<ListCountriesPresenter>
@@ -39,14 +38,11 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ListCountriesAdapter()
         binding.recyclerView.adapter = adapter
-        adapter?.onItemClickListener = object : ListCountriesAdapter.OnItemClickListener {
-            override fun onItemClick(country: CountryEntity) {
-                Log.d("TAG", "country -" + country.country)
-                val countryId: Int = country.id
-                presenter.getCountryStatistic(countryId)
-            }
+        adapter.onItemClickListener = {
+            Log.d("TAG", "country -" + it.country)
+            val countryId: Int = it.id
+            presenter.getCountryStatistic(countryId)
         }
     }
 
@@ -56,10 +52,29 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     }
 
     override fun showCountries(countries: List<CountryEntity>) {
-        adapter?.countries = countries
+        adapter.countries = countries
     }
 
-    override fun showCountryStatistic(country: Country) {
+    override fun showCountryStatistic(country: CountryEntity) {
         Log.d("TAG", "country - " + country.country)
+
+        val countries = arrayListOf<CountryEntity>()
+        countries.addAll(adapter.countries)
+
+        countries.forEachIndexed let@ { index, countryEntity ->
+            if (countryEntity.id == country.id) {
+                countries[index] = country
+                return@let
+            }
+        }
+        adapter.countries = countries
+
+//        adapter.countries.forEachIndexed let@ { index, it ->
+//            if (it.id == country.id) {
+//                it.confirmedStats = country.confirmedStats
+//                adapter.notifyItemChanged(index)
+//                return@let
+//            }
+//        }
     }
 }

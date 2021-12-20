@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface CountriesDao {
-    @Query("SELECT * FROM countries")
+    @Query("SELECT * FROM ${DatabaseConstants.COUNTRIES_TABLE_NAME}")
     fun getAllCountries(): Single<List<CountryEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -19,7 +19,4 @@ interface CountriesDao {
 
     @Query("DELETE FROM countries")
     fun deleteAllCountries()
-
-    @Query("SELECT * FROM countries WHERE longitude == :longitude and latitude == :latitude")
-    fun getCountryByCoordinates(longitude: Double, latitude: Double): Single<CountryEntity>
 }

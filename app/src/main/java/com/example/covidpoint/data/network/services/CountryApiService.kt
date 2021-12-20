@@ -1,4 +1,4 @@
-package com.example.covidpoint.data.network.api
+package com.example.covidpoint.data.network.services
 
 import com.example.covidpoint.data.network.utils.RequestField
 import com.example.covidpoint.data.network.utils.Urls
@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ApiService {
+interface CountryApiService {
     @GET(Urls.GET_COUNTRIES_ENDPOINT)
     fun getCountries(): Single<CountriesResponse>
 
