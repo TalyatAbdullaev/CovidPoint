@@ -1,6 +1,5 @@
 package com.example.covidpoint.presentation.fragments.splash
 
-import android.util.Log
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.database.mapper.CountryMapper
 import com.example.covidpoint.data.pojo.Country
@@ -16,10 +15,10 @@ class SplashPresenter @Inject constructor(
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<SplashInterface>() {
 
-    private val disposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     private fun getCountries() {
-        disposable.add(mainRepository.getDataFromNetwork()
+        compositeDisposable.add(mainRepository.getDataFromNetwork()
             .map {
                 it.locations.mapNotNull {
                     if (it.coordinates.latitude.isNotEmpty() && it.coordinates.longitude.isNotEmpty()) {
@@ -45,6 +44,6 @@ class SplashPresenter @Inject constructor(
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable.dispose()
+        compositeDisposable.dispose()
     }
 }

@@ -26,7 +26,4 @@ interface AppComponent {
     fun inject(splashFragment: SplashFragment)
     fun inject(listCountriesFragment: ListCountriesFragment)
     fun inject(mapCountriesFragment: MapCountriesFragment)
-
-    //Presenters
-//    fun inject(splashPresenter: SplashPresenter)
 }

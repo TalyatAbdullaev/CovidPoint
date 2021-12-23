@@ -35,7 +35,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     private lateinit var yandexMap: MapView
 
     @Inject
-    lateinit var presenterProvider: Provider<MapCountiresPresenter>
+    lateinit var presenterProvider: Provider<MapCountriesPresenter>
     private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun onCreateView(
@@ -55,8 +55,6 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        yandexMap = binding.yandexMap
 
         setupYandexMap()
         setupBottomSheet()
@@ -90,6 +88,8 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     }
 
     private fun setupYandexMap() {
+
+        yandexMap = binding.yandexMap
         yandexMap.map.move(
             CameraPosition(Point(39.32783121110484, 29.01118537580683), 3.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 0F),

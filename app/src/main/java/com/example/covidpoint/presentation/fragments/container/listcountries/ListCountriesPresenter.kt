@@ -16,10 +16,10 @@ class ListCountriesPresenter @Inject constructor(
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<ListCountriesInterface>() {
 
-    private val disposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     private fun getCountriesFromDB() {
-        disposable.add(
+        compositeDisposable.add(
             mainRepository.getDataFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -33,9 +33,8 @@ class ListCountriesPresenter @Inject constructor(
     }
 
     fun getCountryStatistic(id: Int) {
-        disposable.add(mainRepository.getDataFromNetworkById(id)
-            .map { it.location }
-            .map { mapper.mapToEntity(it) }
+        compositeDisposable.add(mainRepository.getDataFromNetworkById(id)
+            .map { mapper.mapToEntity(it.location) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -52,6 +51,6 @@ class ListCountriesPresenter @Inject constructor(
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable.dispose()
+        compositeDisposable.dispose()
     }
 }

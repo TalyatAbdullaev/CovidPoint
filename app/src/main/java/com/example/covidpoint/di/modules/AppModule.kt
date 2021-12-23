@@ -8,13 +8,9 @@ import dagger.Provides
 
 import javax.inject.Singleton
 
-
-
-
 @Module
 class AppModule(private val app: App) {
 
     @Provides
     fun provideApplication():App = app
-
 }

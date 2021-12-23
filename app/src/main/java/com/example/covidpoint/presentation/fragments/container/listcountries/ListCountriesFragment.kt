@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
@@ -38,12 +39,20 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
         binding.recyclerView.adapter = adapter
         adapter.onItemClickListener = {
             Log.d("TAG", "country -" + it.country)
             val countryId: Int = it.id
             presenter.getCountryStatistic(countryId)
         }
+
+        val itemAnimator = binding.recyclerView.itemAnimator
+        if(itemAnimator is DefaultItemAnimator)
+            itemAnimator.supportsChangeAnimations = false
     }
 
     override fun onDestroyView() {
@@ -68,13 +77,5 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
             }
         }
         adapter.countries = countries
-
-//        adapter.countries.forEachIndexed let@ { index, it ->
-//            if (it.id == country.id) {
-//                it.confirmedStats = country.confirmedStats
-//                adapter.notifyItemChanged(index)
-//                return@let
-//            }
-//        }
     }
 }
