@@ -5,52 +5,45 @@ import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.database.mapper.CountryMapper
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moxy.MvpPresenter
+import moxy.presenterScope
 import javax.inject.Inject
+import com.example.covidpoint.data.network.utils.Result
 
 class ListCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<ListCountriesInterface>() {
 
-    private val compositeDisposable = CompositeDisposable()
-
     private fun getCountriesFromDB() {
-        compositeDisposable.add(
-            mainRepository.getDataFromDB()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Log.d("TAG", "countries from db - " + it.toString())
-                    viewState.showCountries(it)
-                }, {
+        presenterScope.launch {
+            val countries = mainRepository.getDataFromDB()
 
-                })
-        )
+            withContext(Dispatchers.Main) { viewState.showCountries(countries) }
+        }
     }
 
     fun getCountryStatistic(id: Int) {
-        compositeDisposable.add(mainRepository.getDataFromNetworkById(id)
-            .map { mapper.mapToEntity(it.location) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.showCountryStatistic(it)
-            }, {
-                Log.d("TAG", "error - " + it.message)
-            })
-        )
+        presenterScope.launch {
+            val response = mainRepository.getDataFromNetworkById(id)
+
+            when(response) {
+                is Result.Success -> {
+                    val country: CountryEntity = mapper.mapToEntity(response.data.location)
+
+                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(country) }
+                }
+                is Result.Error -> {
+                    Log.d("TAG", "error - " + response.throwable.message)
+                }
+            }
+        }
     }
 
     override fun onFirstViewAttach() {
         getCountriesFromDB()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 }

@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface DatabaseRepository {
 
-    fun insertCountries(countries: List<CountryEntity>): Completable
+    suspend fun insertCountries(countries: List<CountryEntity>)
 
-    fun getCountries(): Single<List<CountryEntity>>
+    suspend fun getCountries(): List<CountryEntity>
 }

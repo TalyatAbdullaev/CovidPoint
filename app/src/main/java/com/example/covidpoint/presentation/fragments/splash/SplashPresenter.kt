@@ -1,49 +1,48 @@
 package com.example.covidpoint.presentation.fragments.splash
 
+import android.util.Log
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.database.mapper.CountryMapper
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import moxy.MvpPresenter
+import moxy.presenterScope
 import javax.inject.Inject
+import com.example.covidpoint.data.network.utils.Result
 
 class SplashPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<SplashInterface>() {
 
-    private val compositeDisposable = CompositeDisposable()
+    private fun getCountriesFromNetwork() {
 
-    private fun getCountries() {
-        compositeDisposable.add(mainRepository.getDataFromNetwork()
-            .map {
-                it.locations.mapNotNull {
-                    if (it.coordinates.latitude.isNotEmpty() && it.coordinates.longitude.isNotEmpty()) {
-                        mapper.mapToEntity(it)
-                    } else
-                        null
+        presenterScope.launch {
+
+            val response = mainRepository.getDataFromNetwork()
+
+            when (response) {
+                is Result.Success -> {
+                    val countries: List<CountryEntity> = response.data.locations.mapNotNull {
+                        if (it.coordinates.latitude.isNotEmpty() && it.coordinates.longitude.isNotEmpty()) {
+                            mapper.mapToEntity(it)
+                        } else
+                            null
+                    }
+                    mainRepository.addDataToDB(countries)
+                }
+                is Result.Error -> {
+                    Log.d("TAG", "error - " + response.throwable.message)
                 }
             }
-            .flatMapCompletable { mainRepository.addDataToDB(it) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.navigateToApp()
-            }, {
-                viewState.navigateToApp()
-            })
-        )
+            withContext(Dispatchers.Main) { viewState.navigateToApp() }
+        }
     }
 
     override fun onFirstViewAttach() {
-        getCountries()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
+        getCountriesFromNetwork()
     }
 }

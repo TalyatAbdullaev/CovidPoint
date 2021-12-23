@@ -1,12 +1,12 @@
 package com.example.covidpoint.data.repositories.interfaces
 
+import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.CountryResponse
 import com.example.covidpoint.data.pojo.CountriesResponse
-import io.reactivex.rxjava3.core.Single
 
 interface NetworkRepository {
 
-    fun getCountries(): Single<CountriesResponse>
+    suspend fun getCountries(): Result<CountriesResponse>
 
-    fun getCountryStatistic(id: Int): Single<CountryResponse>
+    suspend fun getCountryStatistic(id: Int): Result<CountryResponse>
 }

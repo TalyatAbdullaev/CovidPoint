@@ -11,9 +11,9 @@ import javax.inject.Inject
 class DatabaseRepositoryImpl @Inject constructor(private val dao: CountriesDao) :
     DatabaseRepository {
 
-    override fun getCountries(): Single<List<CountryEntity>> =
+    override suspend fun getCountries(): List<CountryEntity> =
         dao.getAllCountries()
 
-    override fun insertCountries(countries: List<CountryEntity>): Completable =
+    override suspend fun insertCountries(countries: List<CountryEntity>) =
         dao.insertCountries(countries)
 }

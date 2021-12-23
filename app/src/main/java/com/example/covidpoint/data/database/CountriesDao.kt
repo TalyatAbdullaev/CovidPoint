@@ -12,11 +12,11 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 interface CountriesDao {
     @Query("SELECT * FROM ${DatabaseConstants.COUNTRIES_TABLE_NAME}")
-    fun getAllCountries(): Single<List<CountryEntity>>
+    suspend fun getAllCountries(): List<CountryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCountries(countries: List<CountryEntity>): Completable
+    suspend fun insertCountries(countries: List<CountryEntity>)
 
     @Query("DELETE FROM countries")
-    fun deleteAllCountries()
+    suspend fun deleteAllCountries()
 }
