@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.covidpoint.R
-import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.databinding.FragmentSplashBinding
 import com.example.covidpoint.di.App
-import com.example.covidpoint.utils.AppUtils
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject

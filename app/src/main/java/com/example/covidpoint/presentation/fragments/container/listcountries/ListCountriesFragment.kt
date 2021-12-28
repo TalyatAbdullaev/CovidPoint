@@ -46,8 +46,7 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         binding.recyclerView.adapter = adapter
         adapter.onItemClickListener = {
             Log.d("TAG", "country -" + it.country)
-            val countryId: Int = it.id
-            presenter.getCountryStatistic(countryId)
+            presenter.onItemClicked(it)
         }
 
         val itemAnimator = binding.recyclerView.itemAnimator
@@ -77,5 +76,9 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
             }
         }
         adapter.countries = countries
+    }
+
+    override fun showAlertDialog(message: String) {
+
     }
 }

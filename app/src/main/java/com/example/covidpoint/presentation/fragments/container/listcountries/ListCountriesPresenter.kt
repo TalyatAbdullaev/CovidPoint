@@ -18,32 +18,31 @@ class ListCountriesPresenter @Inject constructor(
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<ListCountriesInterface>() {
 
+    override fun onFirstViewAttach() {
+        getCountriesFromDB()
+    }
+
     private fun getCountriesFromDB() {
         presenterScope.launch {
             val countries = mainRepository.getDataFromDB()
-
             withContext(Dispatchers.Main) { viewState.showCountries(countries) }
         }
     }
 
-    fun getCountryStatistic(id: Int) {
+    fun onItemClicked(country: CountryEntity) {
         presenterScope.launch {
-            val response = mainRepository.getDataFromNetworkById(id)
+            val response = mainRepository.getDataFromNetworkById(country.id)
 
             when(response) {
                 is Result.Success -> {
-                    val country: CountryEntity = mapper.mapToEntity(response.data.location)
-
-                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(country) }
+                    val result: CountryEntity = mapper.mapToEntity(response.data.location)
+                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(result) }
                 }
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
+                    viewState.showAlertDialog(response.throwable.message.toString())
                 }
             }
         }
-    }
-
-    override fun onFirstViewAttach() {
-        getCountriesFromDB()
     }
 }

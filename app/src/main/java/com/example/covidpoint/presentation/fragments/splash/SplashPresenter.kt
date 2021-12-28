@@ -3,6 +3,7 @@ package com.example.covidpoint.presentation.fragments.splash
 import android.util.Log
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.database.mapper.CountryMapper
+import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,6 @@ import kotlinx.coroutines.withContext
 import moxy.MvpPresenter
 import moxy.presenterScope
 import javax.inject.Inject
-import com.example.covidpoint.data.network.utils.Result
 
 class SplashPresenter @Inject constructor(
     private val mainRepository: MainRepository,
@@ -19,9 +19,7 @@ class SplashPresenter @Inject constructor(
 ) : MvpPresenter<SplashInterface>() {
 
     private fun getCountriesFromNetwork() {
-
         presenterScope.launch {
-
             val response = mainRepository.getDataFromNetwork()
 
             when (response) {

@@ -9,6 +9,7 @@ import com.example.covidpoint.data.repositories.interfaces.MainRepository
 import com.example.covidpoint.data.repositories.interfaces.NetworkRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(

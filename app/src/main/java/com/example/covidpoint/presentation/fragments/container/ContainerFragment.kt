@@ -30,7 +30,7 @@ class ContainerFragment : MvpAppCompatFragment() {
 
     private fun setupViewPager() {
         binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.offscreenPageLimit = 2
+        binding.viewPager.offscreenPageLimit = tabIcons.size
 
         binding.viewPager.adapter = FragmentsAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager, true) { tab, position ->

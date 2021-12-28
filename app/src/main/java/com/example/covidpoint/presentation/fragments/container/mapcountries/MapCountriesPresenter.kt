@@ -12,6 +12,9 @@ import moxy.MvpPresenter
 import moxy.presenterScope
 import javax.inject.Inject
 import com.example.covidpoint.data.network.utils.Result
+import com.example.covidpoint.utils.AppUtils
+import com.yandex.mapkit.map.MapObject
+import com.yandex.mapkit.map.UserData
 
 class MapCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
@@ -25,18 +28,21 @@ class MapCountriesPresenter @Inject constructor(
         }
     }
 
-    fun getCountryStatistic(id: Int) {
+    fun onPlacemarkTap(mapObject: MapObject) {
+        val userData = mapObject.userData as UserData
+        val countryId = userData.data.getValue(AppUtils.ID_KEY).toInt()
+
         presenterScope.launch {
-            val response = mainRepository.getDataFromNetworkById(id)
+            val response = mainRepository.getDataFromNetworkById(countryId)
 
             when(response) {
                 is Result.Success -> {
-                    val country: CountryEntity = mapper.mapToEntity(response.data.location)
-
-                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(country) }
+                    val result: CountryEntity = mapper.mapToEntity(response.data.location)
+                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(result) }
                 }
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
+                    viewState.showAlertDialog(response.throwable.message.toString())
                 }
             }
         }

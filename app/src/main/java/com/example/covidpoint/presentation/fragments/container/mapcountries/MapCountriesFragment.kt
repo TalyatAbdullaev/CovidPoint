@@ -1,5 +1,7 @@
 package com.example.covidpoint.presentation.fragments.container.mapcountries
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +13,9 @@ import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.FragmentCountiresMapBinding
 import com.example.covidpoint.databinding.MarkerItemBinding
 import com.example.covidpoint.di.App
-import com.example.covidpoint.presentation.ViewDrawer
 import com.example.covidpoint.utils.AppUtils
+import com.example.covidpoint.utils.extentions.drawCountryIntoView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -33,6 +34,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     private val binding get() = _binding!!
 
     private lateinit var yandexMap: MapView
+    private lateinit var bottomSheet: BottomSheetBehavior<CardView>
 
     @Inject
     lateinit var presenterProvider: Provider<MapCountriesPresenter>
@@ -61,11 +63,8 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     }
 
     override fun showCountryStatistic(country: CountryEntity) {
-
-        val bottomSheet = BottomSheetBehavior.from<CardView>(binding.bottomSheet.root)
-        bottomSheet.state = STATE_EXPANDED
-
-        ViewDrawer().drawView(country, binding.bottomSheet)
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.bottomSheet.drawCountryIntoView(country)
     }
 
     override fun showCountries(countries: List<CountryEntity>) {
@@ -83,38 +82,48 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
             placemark.userData = data
             placemark.addTapListener(this)
         }
-
         pointCollection.clusterPlacemarks(60.0, 15)
     }
 
-    private fun setupYandexMap() {
+    override fun showAlertDialog(message: String) {
+        AlertDialog.Builder(context)
+            .setTitle("Ошибка")
+            .setMessage(message)
+            .setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
 
+                }
+            })
+            .show()
+    }
+
+    private fun setupYandexMap() {
         yandexMap = binding.yandexMap
         yandexMap.map.move(
             CameraPosition(Point(39.32783121110484, 29.01118537580683), 3.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 0F),
             null
         )
-
         yandexMap.map.isRotateGesturesEnabled = false
     }
 
     private fun setupBottomSheet() {
+        bottomSheet = BottomSheetBehavior.from(binding.bottomSheet.root)
         binding.bottomSheet.childLayout.isExpanded = true
         binding.bottomSheet.btnDetailed.visibility = View.GONE
     }
 
-    override fun onClusterAdded(p0: Cluster) {
-        p0.appearance.setIcon(ImageProvider.fromResource(context, R.drawable.ic_mark))
-        p0.addClusterTapListener(this)
+    override fun onClusterAdded(cluster: Cluster) {
+        cluster.appearance.setIcon(ImageProvider.fromResource(context, R.drawable.ic_mark))
+        cluster.addClusterTapListener(this)
     }
 
-    override fun onClusterTap(p0: Cluster): Boolean {
+    override fun onClusterTap(cluster: Cluster): Boolean {
         Log.d("TAG", "cluster tap")
 
         yandexMap.map.move(
             CameraPosition(
-                p0.appearance.geometry,
+                cluster.appearance.geometry,
                 yandexMap.map.cameraPosition.zoom + 1, 0.0f, 0.0f
             ),
             Animation(Animation.Type.SMOOTH, 0.5f),
@@ -123,13 +132,9 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
         return true
     }
 
-    override fun onMapObjectTap(p0: MapObject, p1: Point): Boolean {
+    override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
         Log.d("TAG", "tap")
-
-        val userData = p0.userData as UserData
-        val countryId = userData.data.getValue(AppUtils.ID_KEY).toInt()
-        presenter.getCountryStatistic(countryId)
-
+        presenter.onPlacemarkTap(mapObject)
         return true
     }
 

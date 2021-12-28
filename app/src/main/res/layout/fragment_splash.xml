@@ -10,7 +10,7 @@
         android:id="@+id/ivSplashLogo"
         android:layout_width="195dp"
         android:layout_height="97dp"
-        android:src="@drawable/splash_creen_logo"
+        android:src="@drawable/splash_screen_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

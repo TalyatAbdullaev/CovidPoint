@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.CountryItemBinding
-import com.example.covidpoint.presentation.ViewDrawer
+import com.example.covidpoint.utils.extentions.drawCountryIntoView
 
 class ListCountriesAdapter :
     RecyclerView.Adapter<ListCountriesAdapter.CountryListViewHolder>() {
@@ -28,7 +28,7 @@ class ListCountriesAdapter :
 
         fun bind(country: CountryEntity) {
 
-            ViewDrawer().drawView(country, binding)
+            binding.drawCountryIntoView(country)
 
             if(expandedItemsSet.contains(adapterPosition)) {
                 binding.childLayout.isExpanded = true

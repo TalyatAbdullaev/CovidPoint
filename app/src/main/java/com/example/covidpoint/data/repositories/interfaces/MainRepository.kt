@@ -6,6 +6,7 @@ import com.example.covidpoint.data.pojo.CountryResponse
 import com.example.covidpoint.data.pojo.CountriesResponse
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
 
 interface MainRepository {
 

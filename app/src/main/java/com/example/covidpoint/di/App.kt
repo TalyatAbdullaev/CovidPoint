@@ -1,6 +1,7 @@
 package com.example.covidpoint.di
 
 import android.app.Application
+import com.example.covidpoint.data.network.utils.ApiKeys
 import com.example.covidpoint.di.components.AppComponent
 import com.example.covidpoint.di.components.DaggerAppComponent
 import com.example.covidpoint.di.modules.AppModule
@@ -14,7 +15,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        MapKitFactory.setApiKey(AppUtils.YANDEX_API_KEY)
+        MapKitFactory.setApiKey(ApiKeys.YANDEX_API_KEY)
 
         graph = DaggerAppComponent.builder()
             .appModule(AppModule(this))

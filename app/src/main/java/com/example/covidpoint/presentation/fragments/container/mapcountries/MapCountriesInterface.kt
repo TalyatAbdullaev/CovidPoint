@@ -12,4 +12,6 @@ interface MapCountriesInterface : MvpView, ListCountriesInterface {
     override fun showCountries(countries: List<CountryEntity>)
 
     override fun showCountryStatistic(country: CountryEntity)
+
+    override fun showAlertDialog(message: String)
 }
