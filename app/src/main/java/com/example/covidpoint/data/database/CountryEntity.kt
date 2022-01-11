@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity(tableName = DatabaseConstants.COUNTRIES_TABLE_NAME)
+@Entity(tableName = CountriesDatabaseConstants.COUNTRIES_TABLE_NAME)
 data class CountryEntity @JvmOverloads constructor(
 
     @PrimaryKey

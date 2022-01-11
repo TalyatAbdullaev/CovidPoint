@@ -1,4 +1,4 @@
-package com.example.covidpoint.data.database.mapper
+package com.example.covidpoint.presentation.mapper
 
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.pojo.Country

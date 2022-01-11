@@ -19,8 +19,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.layers.ObjectEvent
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.mapview.MapView
+import com.yandex.mapkit.user_location.UserLocationObjectListener
+import com.yandex.mapkit.user_location.UserLocationView
+import com.yandex.mapkit.user_location.internal.UserLocationLayerBinding
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import moxy.MvpAppCompatFragment
@@ -100,7 +104,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     private fun setupYandexMap() {
         yandexMap = binding.yandexMap
         yandexMap.map.move(
-            CameraPosition(Point(39.32783121110484, 29.01118537580683), 3.0f, 0.0f, 0.0f),
+            CameraPosition(Point(39.32783121110484, 29.01118537580683), 5.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 0F),
             null
         )

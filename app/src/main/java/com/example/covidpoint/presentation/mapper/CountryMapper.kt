@@ -1,4 +1,4 @@
-package com.example.covidpoint.data.database.mapper
+package com.example.covidpoint.presentation.mapper
 
 interface CountryMapper<E, D> {
 

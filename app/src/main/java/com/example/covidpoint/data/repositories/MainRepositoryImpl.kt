@@ -4,28 +4,25 @@ import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.CountryResponse
 import com.example.covidpoint.data.pojo.CountriesResponse
-import com.example.covidpoint.data.repositories.interfaces.DatabaseRepository
+import com.example.covidpoint.data.datasource.interfaces.DatabaseSource
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import com.example.covidpoint.data.repositories.interfaces.NetworkRepository
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
-import retrofit2.Response
+import com.example.covidpoint.data.datasource.interfaces.NetworkSource
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
-    private val networkRepository: NetworkRepository,
-    private val databaseRepository: DatabaseRepository
+    private val networkSource: NetworkSource,
+    private val databaseSource: DatabaseSource
 ) : MainRepository {
 
     override suspend fun getDataFromDB(): List<CountryEntity> =
-        databaseRepository.getCountries()
+        databaseSource.getCountries()
 
     override suspend fun addDataToDB(countries: List<CountryEntity>) =
-        databaseRepository.insertCountries(countries)
+        databaseSource.insertCountries(countries)
 
     override suspend fun getDataFromNetwork(): Result<CountriesResponse> =
-        networkRepository.getCountries()
+        networkSource.getCountries()
 
     override suspend fun getDataFromNetworkById(id: Int): Result<CountryResponse> =
-        networkRepository.getCountryStatistic(id)
+        networkSource.getCountryStatistic(id)
 }

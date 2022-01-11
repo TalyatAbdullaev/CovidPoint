@@ -4,14 +4,13 @@ import androidx.room.Room
 import com.example.covidpoint.data.database.CountriesDao
 import com.example.covidpoint.data.database.CountriesDatabase
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.data.database.DatabaseConstants
-import com.example.covidpoint.data.database.mapper.CountryMapper
-import com.example.covidpoint.data.database.mapper.CountryMapperImpl
+import com.example.covidpoint.data.database.CountriesDatabaseConstants
+import com.example.covidpoint.presentation.mapper.CountryMapper
+import com.example.covidpoint.presentation.mapper.CountryMapperImpl
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.di.App
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
@@ -21,7 +20,7 @@ class DatabaseModule {
         Room.databaseBuilder(
             app,
             CountriesDatabase::class.java,
-            DatabaseConstants.COUNTRIES_DATABASE_NAME
+            CountriesDatabaseConstants.COUNTRIES_DATABASE_NAME
         ).build()
 
     @Provides

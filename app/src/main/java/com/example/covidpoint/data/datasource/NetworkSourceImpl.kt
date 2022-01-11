@@ -1,18 +1,15 @@
-package com.example.covidpoint.data.repositories
+package com.example.covidpoint.data.datasource
 
 import com.example.covidpoint.data.network.services.CountryApiService
 import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.CountryResponse
 import com.example.covidpoint.data.pojo.CountriesResponse
-import com.example.covidpoint.data.repositories.interfaces.NetworkRepository
-import io.reactivex.rxjava3.core.Single
-import kotlinx.coroutines.Deferred
+import com.example.covidpoint.data.datasource.interfaces.NetworkSource
 import retrofit2.HttpException
-import retrofit2.Response
 import javax.inject.Inject
 
-class NetworkRepositoryImpl @Inject constructor(private val countryApiService: CountryApiService) :
-    NetworkRepository {
+class NetworkSourceImpl @Inject constructor(private val countryApiService: CountryApiService) :
+    NetworkSource {
 
     override suspend fun getCountries(): Result<CountriesResponse> {
         return try {

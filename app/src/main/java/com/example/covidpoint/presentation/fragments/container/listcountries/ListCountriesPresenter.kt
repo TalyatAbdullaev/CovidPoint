@@ -2,7 +2,7 @@ package com.example.covidpoint.presentation.fragments.container.listcountries
 
 import android.util.Log
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.data.database.mapper.CountryMapper
+import com.example.covidpoint.presentation.mapper.CountryMapper
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
 import kotlinx.coroutines.Dispatchers
