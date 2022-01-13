@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_mark" />
+        app:srcCompat="@drawable/ic_mark"
+        android:contentDescription="@string/point_description" />
 
     <TextView
         android:id="@+id/tvConfirmedValue"

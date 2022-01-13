@@ -1,19 +1,15 @@
 package com.example.covidpoint.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.text.SimpleDateFormat
 import java.util.*
 
 object DateConverter {
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun convertDate(date: String): String {
-        val localDate = OffsetDateTime.parse(date).toLocalDate()
 
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-            .withLocale(Locale("ru"))
-            .format(localDate)
+    fun convertDate(date: String): String {
+
+        val localDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
+        val outDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+        return outDateFormat.format(localDate)
     }
 }

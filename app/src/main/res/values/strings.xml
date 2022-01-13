@@ -1,13 +1,28 @@
 <resources>
     <string name="app_name">Covid Point</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="confirmed_label">Подтверждено</string>
-    <string name="flag">Флаг</string>
-    <string name="btn_detail">Подробнее</string>
-    <string name="btn_hide">Скрыть</string>
     <string name="covid_point">CovidPoint</string>
-    <string name="deaths_label">Смертельные случаи</string>
-    <string name="recovered_label">Выздоровевшие</string>
-    <string name="dynamic_label">Динамика заражения</string>
+
+    <!-- Alert Dialog  -->
+    <string name="message_error_connect">Нет соединения с интернетом</string>
+    <string name="message_error_default_title">Не удалось</string>
+    <string name="message_error_server">Сервер не отвечает</string>
+    <string name="label_error">Ошибка</string>
+    <string name="label_repeat">Повторить</string>
+    <string name="label_close">Закрыть</string>
+
+    <!-- Custom TabLayout -->
+    <string name="map_description">Карта</string>
+    <string name="list_description">Список</string>
+
+    <!-- Marker Item -->
+    <string name="point_description">Пункт</string>
+
+    <!-- Country Item -->
+    <string name="flag_image_description">Флаг</string>
+    <string name="label_confirmed">Подтверждено</string>
+    <string name="label_deaths">Смертельныые случаи</string>
+    <string name="label_recovered">Выздоровевшие</string>
+    <string name="label_dynamic">Динамика заражения</string>
+    <string name="btn_detailed">Подробнее</string>
+    <string name="btn_hide">Скрыть</string>
 </resources>

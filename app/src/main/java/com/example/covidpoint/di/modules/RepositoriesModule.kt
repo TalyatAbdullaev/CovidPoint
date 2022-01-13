@@ -15,11 +15,11 @@ import dagger.Provides
 class RepositoriesModule {
 
     @Provides
-    fun provideDatabaseRepository(dao: CountriesDao): DatabaseSource =
+    fun provideDatabaseSource(dao: CountriesDao): DatabaseSource =
         DatabaseSourceImpl(dao)
 
     @Provides
-    fun provideNetworkRepository(countryApiService: CountryApiService): NetworkSource =
+    fun provideNetworkSource(countryApiService: CountryApiService): NetworkSource =
         NetworkSourceImpl(countryApiService)
 
     @Provides

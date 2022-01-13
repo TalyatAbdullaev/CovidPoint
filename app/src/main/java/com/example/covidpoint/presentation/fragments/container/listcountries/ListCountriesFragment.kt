@@ -1,20 +1,24 @@
 package com.example.covidpoint.presentation.fragments.container.listcountries
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
+import com.example.covidpoint.presentation.fragments.container.BasePresenterInterface
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
+class ListCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface {
     private var _binding: FragmentCountiresListBinding? = null
     private val binding get() = _binding!!
     private val adapter: ListCountriesAdapter by lazy { ListCountriesAdapter() }
@@ -78,7 +82,24 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         adapter.countries = countries
     }
 
-    override fun showAlertDialog(message: String) {
+    override fun showAlertDialog(message: String, countryId: Int) {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.label_error))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.label_repeat), object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    presenter.onPositiveButtonClick(countryId)
+                }
+            })
+            .setNegativeButton(getString(R.string.label_close), object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+
+                }
+            })
+            .show()
+    }
+
+    override fun showProgressBar() {
 
     }
 }

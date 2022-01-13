@@ -30,14 +30,14 @@ class ListCountriesAdapter :
 
             binding.drawCountryIntoView(country)
 
-            if(expandedItemsSet.contains(adapterPosition)) {
+            if (expandedItemsSet.contains(adapterPosition)) {
                 binding.childLayout.isExpanded = true
                 binding.btnDetailed.text =
                     binding.root.resources.getString(R.string.btn_hide)
             } else {
                 binding.childLayout.isExpanded = false
                 binding.btnDetailed.text =
-                    binding.root.resources.getString(R.string.btn_detail)
+                    binding.root.resources.getString(R.string.btn_detailed)
             }
 
             binding.btnDetailed.setOnClickListener {
@@ -45,7 +45,7 @@ class ListCountriesAdapter :
                 if (child.isExpanded) {
                     child.isExpanded = false
                     binding.btnDetailed.text =
-                        binding.root.resources.getString(R.string.btn_detail)
+                        binding.root.resources.getString(R.string.btn_detailed)
 
                     expandedItemsSet.remove(adapterPosition)
                 } else {

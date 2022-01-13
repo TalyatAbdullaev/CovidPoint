@@ -80,9 +80,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     //Kodein
-    def kodein_version = "7.10.0"
-    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
-    implementation "org.kodein.di:kodein-di-framework-android:$kodein_version"
+//    def kodein_version = "7.10.0"
+//    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
+//    implementation "org.kodein.di:kodein-di-framework-android:$kodein_version"
+//    implementation "org.kodein.di:kodein-di:$kodein_version"
 
     //Glide
     def glide_version = "4.12.0"

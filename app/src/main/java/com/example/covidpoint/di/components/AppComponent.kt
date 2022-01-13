@@ -6,7 +6,6 @@ import com.example.covidpoint.presentation.fragments.container.ContainerFragment
 import com.example.covidpoint.presentation.fragments.container.listcountries.ListCountriesFragment
 import com.example.covidpoint.presentation.fragments.container.mapcountries.MapCountriesFragment
 import com.example.covidpoint.presentation.fragments.splash.SplashFragment
-import com.example.covidpoint.presentation.fragments.splash.SplashPresenter
 import dagger.Component
 
 @Component(

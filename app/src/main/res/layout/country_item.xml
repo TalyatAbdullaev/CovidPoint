@@ -32,6 +32,7 @@
                 android:id="@+id/ivFlag"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/flag_image_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -55,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Подтверждено"
+                android:text="@string/label_confirmed"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/tvCountryName"
@@ -110,7 +111,7 @@
                     android:id="@+id/tvDeathsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Смертельныые случаи"
+                    android:text="@string/label_deaths"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -137,7 +138,7 @@
                     android:id="@+id/tvRecoveredLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Выздоровевшие"
+                    android:text="@string/label_recovered"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -164,14 +165,16 @@
                     android:id="@+id/tvDynamicLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Динамика заражения"
+                    android:text="@string/label_dynamic"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/confirmedGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:layout_height="150dp" >
+
+                </com.github.mikephil.charting.charts.BarChart>
 
                 <LinearLayout
                     android:id="@+id/dateContainer"
@@ -201,6 +204,7 @@
                         android:textStyle="bold"
                         tools:text="30 ноября 2021" />
                 </LinearLayout>
+
             </LinearLayout>
         </net.cachapa.expandablelayout.ExpandableLayout>
 
@@ -210,8 +214,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Подробнее"
+            android:text="@string/btn_detailed"
             android:textColor="#868686"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/childLayout" />

@@ -18,6 +18,10 @@ class SplashPresenter @Inject constructor(
     private val mapper: CountryMapper<Country, CountryEntity>
 ) : MvpPresenter<SplashInterface>() {
 
+    override fun onFirstViewAttach() {
+        getCountriesFromNetwork()
+    }
+
     private fun getCountriesFromNetwork() {
         presenterScope.launch {
             val response = mainRepository.getDataFromNetwork()
@@ -38,9 +42,5 @@ class SplashPresenter @Inject constructor(
             }
             withContext(Dispatchers.Main) { viewState.navigateToApp() }
         }
-    }
-
-    override fun onFirstViewAttach() {
-        getCountriesFromNetwork()
     }
 }

@@ -1,6 +1,8 @@
 package com.example.covidpoint.di.modules
 
+import android.content.Context
 import com.example.covidpoint.data.network.services.CountryApiService
+import com.example.covidpoint.data.network.utils.RequestHandler
 import com.example.covidpoint.data.network.utils.Urls
 import dagger.Module
 import dagger.Provides
@@ -29,4 +31,8 @@ class NetworkModule {
     @Provides
     fun provideApiService (retrofit: Retrofit): CountryApiService =
         retrofit.create(CountryApiService::class.java)
+
+    @Provides
+    fun provideRequestHandler(context: Context): RequestHandler =
+        RequestHandler(context)
 }
