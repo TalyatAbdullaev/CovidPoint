@@ -6,7 +6,6 @@ import com.example.covidpoint.data.network.utils.RequestHandler
 import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import com.example.covidpoint.presentation.fragments.container.BasePresenterInterface
 import com.example.covidpoint.presentation.mapper.CountryMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +18,7 @@ class ListCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>,
     private val requestHandler: RequestHandler
-) : MvpPresenter<BasePresenterInterface>() {
+) : MvpPresenter<IListCountriesPresenter>() {
 
     override fun onFirstViewAttach() {
         getCountriesFromDB()

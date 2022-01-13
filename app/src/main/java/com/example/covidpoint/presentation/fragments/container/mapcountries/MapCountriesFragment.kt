@@ -8,8 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +22,6 @@ import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.FragmentCountiresMapBinding
 import com.example.covidpoint.databinding.MarkerItemBinding
 import com.example.covidpoint.di.App
-import com.example.covidpoint.presentation.fragments.container.BasePresenterInterface
 import com.example.covidpoint.utils.AppUtils
 import com.example.covidpoint.utils.extentions.drawCountryIntoView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -40,7 +37,7 @@ import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MapCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface,
+class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     ClusterListener, ClusterTapListener, MapObjectTapListener {
     private var _binding: FragmentCountiresMapBinding? = null
     private val binding get() = _binding!!
@@ -101,8 +98,6 @@ class MapCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface,
     }
 
     override fun showAlertDialog(message: String, countryId: Int) {
-        progressAlertDialog?.dismiss()
-
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.label_error))
             .setMessage(message)
@@ -133,6 +128,10 @@ class MapCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface,
         progressAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
+    override fun hideProgressBar() {
+        progressAlertDialog?.dismiss()
+    }
+
     private fun setupYandexMap(point: Point) {
         yandexMap = binding.yandexMap
         yandexMap.map.move(
@@ -152,8 +151,15 @@ class MapCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface,
     private fun getLocation() {
         val manager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             val permissions = arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION

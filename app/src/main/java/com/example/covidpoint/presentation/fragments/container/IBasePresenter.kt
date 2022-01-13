@@ -7,7 +7,7 @@ import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface BasePresenterInterface: MvpView {
+interface IBasePresenter: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCountries(countries: List<CountryEntity>)
@@ -17,7 +17,4 @@ interface BasePresenterInterface: MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showAlertDialog(message: String, countryId: Int)
-
-    @StateStrategyType(SkipStrategy::class)
-    fun showProgressBar()
 }

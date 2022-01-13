@@ -6,7 +6,6 @@ import com.example.covidpoint.data.network.utils.RequestHandler
 import com.example.covidpoint.data.network.utils.Result
 import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.data.repositories.interfaces.MainRepository
-import com.example.covidpoint.presentation.fragments.container.BasePresenterInterface
 import com.example.covidpoint.presentation.mapper.CountryMapper
 import com.example.covidpoint.utils.AppUtils
 import com.yandex.mapkit.map.MapObject
@@ -22,7 +21,7 @@ class MapCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>,
     private val requestHandler: RequestHandler
-) : MvpPresenter<BasePresenterInterface>() {
+) : MvpPresenter<IMapCountriesPresenter>() {
 
     override fun onFirstViewAttach() {
         getCountriesFromDB()
@@ -53,11 +52,14 @@ class MapCountriesPresenter @Inject constructor(
             when(response) {
                 is Result.Success -> {
                     val result: CountryEntity = mapper.mapToEntity(response.data.location)
-                    withContext(Dispatchers.Main) { viewState.showCountryStatistic(result) }
+                    withContext(Dispatchers.Main) {
+                        viewState.hideProgressBar()
+                        viewState.showCountryStatistic(result) }
                 }
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
                     val message = requestHandler.requestHandler(response.throwable)
+                    viewState.hideProgressBar()
                     viewState.showAlertDialog(message, countryId)
                 }
             }

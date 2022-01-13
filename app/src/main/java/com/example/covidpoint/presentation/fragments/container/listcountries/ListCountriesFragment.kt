@@ -12,13 +12,12 @@ import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.FragmentCountiresListBinding
 import com.example.covidpoint.di.App
-import com.example.covidpoint.presentation.fragments.container.BasePresenterInterface
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class ListCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface {
+class ListCountriesFragment : MvpAppCompatFragment(), IListCountriesPresenter {
     private var _binding: FragmentCountiresListBinding? = null
     private val binding get() = _binding!!
     private val adapter: ListCountriesAdapter by lazy { ListCountriesAdapter() }
@@ -99,7 +98,5 @@ class ListCountriesFragment : MvpAppCompatFragment(), BasePresenterInterface {
             .show()
     }
 
-    override fun showProgressBar() {
 
-    }
 }
