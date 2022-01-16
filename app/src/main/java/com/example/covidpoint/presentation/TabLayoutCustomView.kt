@@ -24,7 +24,7 @@ class TabLayoutCustomView @JvmOverloads constructor(
     }
 
     private fun initListeners() {
-        binding.ivMapIcon.setOnClickListener {
+        binding.ivMenuIcon.setOnClickListener {
             onPageClickListener?.invoke(PaintCodes.MAP_CODE.value)
             changeButton(it)
         }
@@ -38,7 +38,7 @@ class TabLayoutCustomView @JvmOverloads constructor(
         fun defaultButtonState() {
             val defaultColor = ContextCompat.getColor(context, R.color.tab_layout_background)
             with(binding) {
-                ivMapIcon.setBackgroundColor(defaultColor)
+                ivMenuIcon.setBackgroundColor(defaultColor)
                 ivListIcon.setBackgroundColor(defaultColor)
             }
         }

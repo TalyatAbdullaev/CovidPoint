@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/imageContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
     app:cardBackgroundColor="@color/tab_layout_background"
     app:cardCornerRadius="5dp"
     app:cardElevation="0dp">
 
     <ImageView
-        android:id="@+id/ivMapIcon"
+        android:id="@+id/ivMenuIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:contentDescription="@string/map_description"
         android:paddingHorizontal="30dp"
         android:paddingVertical="5dp"

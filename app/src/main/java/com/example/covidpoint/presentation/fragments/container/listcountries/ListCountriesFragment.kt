@@ -97,6 +97,4 @@ class ListCountriesFragment : MvpAppCompatFragment(), IListCountriesPresenter {
             })
             .show()
     }
-
-
 }

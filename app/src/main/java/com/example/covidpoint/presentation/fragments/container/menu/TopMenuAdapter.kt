@@ -1,8 +1,11 @@
 package com.example.covidpoint.presentation.fragments.container.menu
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.TopMenuItemBinding
 
@@ -14,7 +17,11 @@ class TopMenuAdapter(private val menuIcons: List<Int>) :
     inner class TopMenuViewHolder(private val binding: TopMenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.ivMapIcon.setImageResource(position)
+            binding.ivMenuIcon.setImageResource(menuIcons[position])
+        }
+
+        fun setMenuItemsBackground() {
+            binding.imageContainer.setCardBackgroundColor(Color.WHITE)
         }
     }
 
@@ -27,6 +34,7 @@ class TopMenuAdapter(private val menuIcons: List<Int>) :
         holder.bind(position)
         holder.itemView.setOnClickListener {
             onMenuItemClickListener?.invoke(position)
+            holder.setMenuItemsBackground()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.covidpoint.presentation.fragments.container
+package com.example.covidpoint.presentation.fragments.container.menu
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
