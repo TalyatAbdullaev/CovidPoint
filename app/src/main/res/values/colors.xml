@@ -11,5 +11,5 @@
     <color name="progress_bar_confirmed_end">#474B4D</color>
     <color name="progress_bar_confirmed_start">#868686</color>
     <color name="column_graph">#979797</color>
-    <color name="tab_layout_background">#ECECEC</color>
+    <color name="top_menu_background">#ECECEC</color>
 </resources>

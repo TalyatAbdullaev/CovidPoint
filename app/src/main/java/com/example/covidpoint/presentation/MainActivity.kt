@@ -5,6 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.covidpoint.R
 import com.example.covidpoint.databinding.ActivityMainBinding
 import com.example.covidpoint.di.App
+import com.karumi.dexter.Dexter
+import android.Manifest
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

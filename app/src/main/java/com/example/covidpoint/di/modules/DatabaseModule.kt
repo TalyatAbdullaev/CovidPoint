@@ -11,6 +11,7 @@ import com.example.covidpoint.data.pojo.Country
 import com.example.covidpoint.di.App
 import dagger.Module
 import dagger.Provides
+import org.kodein.di.*
 
 @Module
 class DatabaseModule {

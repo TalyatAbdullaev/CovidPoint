@@ -1,27 +1,31 @@
 package com.example.covidpoint.presentation.fragments.container.menu
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidpoint.R
-import com.example.covidpoint.data.database.CountryEntity
 import com.example.covidpoint.databinding.TopMenuItemBinding
 
 class TopMenuAdapter(private val menuIcons: List<Int>) :
     RecyclerView.Adapter<TopMenuAdapter.TopMenuViewHolder>() {
 
     var onMenuItemClickListener: ((Int) -> Unit)? = null
+    private var checkedItemPosition = 0
 
     inner class TopMenuViewHolder(private val binding: TopMenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            binding.ivMenuIcon.setImageResource(menuIcons[position])
-        }
+            fun setMenuItemsBackground(position: Int) {
+                if(position == checkedItemPosition)
+                    binding.cvImageContainer.setCardBackgroundColor(Color.WHITE)
+                else
+                    binding.cvImageContainer.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.top_menu_background))
+            }
 
-        fun setMenuItemsBackground() {
-            binding.imageContainer.setCardBackgroundColor(Color.WHITE)
+            binding.ivMenuIcon.setImageResource(menuIcons[position])
+            setMenuItemsBackground(position)
         }
     }
 
@@ -34,7 +38,8 @@ class TopMenuAdapter(private val menuIcons: List<Int>) :
         holder.bind(position)
         holder.itemView.setOnClickListener {
             onMenuItemClickListener?.invoke(position)
-            holder.setMenuItemsBackground()
+            checkedItemPosition = holder.adapterPosition
+            notifyDataSetChanged()
         }
     }
 

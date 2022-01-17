@@ -10,6 +10,7 @@ object DateConverter {
         val localDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
         val outDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
 
-        return outDateFormat.format(localDate)
+        return if(localDate == null) { "" }
+        else { outDateFormat.format(localDate) }
     }
 }

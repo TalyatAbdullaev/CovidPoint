@@ -5,6 +5,8 @@ import android.app.Application
 import android.content.Context
 import com.example.covidpoint.di.App
 import dagger.Provides
+import org.kodein.di.DI
+import org.kodein.di.bind
 
 import javax.inject.Singleton
 

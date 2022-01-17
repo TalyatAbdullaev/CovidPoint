@@ -1,10 +1,12 @@
 package com.example.covidpoint.presentation.fragments.container
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.covidpoint.R
 import com.example.covidpoint.databinding.FragmentContainerBinding
 import com.example.covidpoint.presentation.fragments.container.menu.FragmentsAdapter
@@ -36,15 +38,17 @@ class ContainerFragment : MvpAppCompatFragment() {
 
         with(viewPager) {
             isUserInputEnabled = false
-            offscreenPageLimit = menuIcons.size
+            offscreenPageLimit = fragmentsCount
             adapter = FragmentsAdapter(this@ContainerFragment)
         }
 
         binding.topMenu.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val adapter = TopMenuAdapter(menuIcons)
         binding.topMenu.adapter = adapter
+
         adapter.onMenuItemClickListener = {
-            if(it < fragmentsCount) { viewPager.currentItem = it }
+            if(it < fragmentsCount)
+                viewPager.currentItem = it
         }
     }
 }

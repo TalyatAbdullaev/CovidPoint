@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +27,11 @@ import com.example.covidpoint.di.App
 import com.example.covidpoint.utils.AppUtils
 import com.example.covidpoint.utils.extentions.drawCountryIntoView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -68,9 +75,9 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getLocation()
         setupYandexMap(AppUtils.DEFAULT_POINT)
         setupBottomSheet()
+        getPermissions()
     }
 
     override fun showCountryStatistic(country: CountryEntity) {
@@ -134,12 +141,16 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
 
     private fun setupYandexMap(point: Point) {
         yandexMap = binding.yandexMap
-        yandexMap.map.move(
-            CameraPosition(point, 5.0f, 0.0f, 0.0f),
+        yandexMap.map.isRotateGesturesEnabled = false
+        moveCameraToPoint(point, 4.5F)
+    }
+
+    private fun moveCameraToPoint(point: Point, zoom: Float) {
+        binding.yandexMap.map.move(
+            CameraPosition(point, zoom, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 0.5F),
             null
         )
-        yandexMap.map.isRotateGesturesEnabled = false
     }
 
     private fun setupBottomSheet() {
@@ -149,29 +160,59 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     }
 
     private fun getLocation() {
-        val manager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
+
+    }
+
+    private fun getPermissions() {
+        Dexter.withContext(context)
+            .withPermissions(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            val permissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
             )
-            ActivityCompat.requestPermissions(requireActivity(), permissions, 1000)
-        } else {
-            manager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                0L,
-                0F
-            ) { location -> setupYandexMap(Point(location.latitude, location.longitude)) }
-        }
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report?.let {
+                        if (report.areAllPermissionsGranted()) {
+                            if (ActivityCompat.checkSelfPermission(
+                                    requireContext(),
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                    requireContext(),
+                                    Manifest.permission.ACCESS_COARSE_LOCATION
+                                ) != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                // TODO: Consider calling
+                                //    ActivityCompat#requestPermissions
+                                // here to request the missing permissions, and then overriding
+                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                //                                          int[] grantResults)
+                                // to handle the case where the user grants the permission. See the documentation
+                                // for ActivityCompat#requestPermissions for more details.
+                                return
+                            }
+                            val manager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                            manager.requestLocationUpdates(
+                                LocationManager.NETWORK_PROVIDER,
+                                0L,
+                                0F,
+                                object : LocationListener {
+                                    override fun onLocationChanged(location: Location) {
+                                        val point = Point(location.latitude, location.longitude)
+                                        moveCameraToPoint(point, yandexMap.map.cameraPosition.zoom)
+                                    }
+                                })
+                        }
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+            })
     }
 
     override fun onClusterAdded(cluster: Cluster) {
@@ -181,15 +222,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
 
     override fun onClusterTap(cluster: Cluster): Boolean {
         Log.d("TAG", "cluster tap")
-
-        yandexMap.map.move(
-            CameraPosition(
-                cluster.appearance.geometry,
-                yandexMap.map.cameraPosition.zoom + 1, 0.0f, 0.0f
-            ),
-            Animation(Animation.Type.SMOOTH, 0.5f),
-            null
-        )
+        moveCameraToPoint(cluster.appearance.geometry, yandexMap.map.cameraPosition.zoom + 1)
         return true
     }
 
