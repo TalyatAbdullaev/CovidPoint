@@ -7,7 +7,7 @@ import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface IBasePresenter: MvpView {
+interface BaseCountriesInterface: MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCountries(countries: List<CountryEntity>)

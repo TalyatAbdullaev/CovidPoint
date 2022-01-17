@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.databinding.FragmentCountiresListBinding
+import com.example.covidpoint.databinding.FragmentCountriesListBinding
 import com.example.covidpoint.di.App
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class ListCountriesFragment : MvpAppCompatFragment(), IListCountriesPresenter {
-    private var _binding: FragmentCountiresListBinding? = null
+class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
+    private var _binding: FragmentCountriesListBinding? = null
     private val binding get() = _binding!!
     private val adapter: ListCountriesAdapter by lazy { ListCountriesAdapter() }
 
@@ -35,7 +35,7 @@ class ListCountriesFragment : MvpAppCompatFragment(), IListCountriesPresenter {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCountiresListBinding.inflate(inflater, container, false)
+        _binding = FragmentCountriesListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

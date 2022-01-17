@@ -2,15 +2,9 @@ package com.example.covidpoint.presentation.fragments.container.mapcountries
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,10 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import com.example.covidpoint.R
 import com.example.covidpoint.data.database.CountryEntity
-import com.example.covidpoint.databinding.FragmentCountiresMapBinding
+import com.example.covidpoint.databinding.FragmentCountriesMapBinding
 import com.example.covidpoint.databinding.MarkerItemBinding
 import com.example.covidpoint.di.App
 import com.example.covidpoint.utils.AppUtils
@@ -45,9 +38,9 @@ import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
+class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     ClusterListener, ClusterTapListener, MapObjectTapListener {
-    private var _binding: FragmentCountiresMapBinding? = null
+    private var _binding: FragmentCountriesMapBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var yandexMap: MapView
@@ -61,8 +54,8 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentCountiresMapBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentCountriesMapBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -189,9 +182,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: MutableList<PermissionRequest>?,
                     token: PermissionToken?
-                ) {
-                    token?.continuePermissionRequest()
-                }
+                ) { token?.continuePermissionRequest() }
             })
             .check()
     }

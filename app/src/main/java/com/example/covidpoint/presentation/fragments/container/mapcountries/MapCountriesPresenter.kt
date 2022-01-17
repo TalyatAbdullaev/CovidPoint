@@ -21,7 +21,7 @@ class MapCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>,
     private val requestHandler: RequestHandler
-) : MvpPresenter<IMapCountriesPresenter>() {
+) : MvpPresenter<MapCountriesInterface>() {
 
     override fun onFirstViewAttach() {
         getCountriesFromDB()
