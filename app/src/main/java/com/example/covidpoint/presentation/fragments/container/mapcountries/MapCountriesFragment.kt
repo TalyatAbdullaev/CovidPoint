@@ -26,6 +26,7 @@ import com.example.covidpoint.databinding.MarkerItemBinding
 import com.example.covidpoint.di.App
 import com.example.covidpoint.utils.AppUtils
 import com.example.covidpoint.utils.extentions.drawCountryIntoView
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -160,8 +161,14 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     }
 
     private fun getLocation() {
-
-
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener {
+                if (it != null) {
+                    val point = Point(it.latitude, it.longitude)
+                    moveCameraToPoint(point, yandexMap.map.cameraPosition.zoom)
+                }
+            }
     }
 
     private fun getPermissions() {
@@ -174,34 +181,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                     report?.let {
                         if (report.areAllPermissionsGranted()) {
-                            if (ActivityCompat.checkSelfPermission(
-                                    requireContext(),
-                                    Manifest.permission.ACCESS_FINE_LOCATION
-                                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                                    requireContext(),
-                                    Manifest.permission.ACCESS_COARSE_LOCATION
-                                ) != PackageManager.PERMISSION_GRANTED
-                            ) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return
-                            }
-                            val manager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                            manager.requestLocationUpdates(
-                                LocationManager.NETWORK_PROVIDER,
-                                0L,
-                                0F,
-                                object : LocationListener {
-                                    override fun onLocationChanged(location: Location) {
-                                        val point = Point(location.latitude, location.longitude)
-                                        moveCameraToPoint(point, yandexMap.map.cameraPosition.zoom)
-                                    }
-                                })
+                            getLocation()
                         }
                     }
                 }
@@ -213,6 +193,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
                     token?.continuePermissionRequest()
                 }
             })
+            .check()
     }
 
     override fun onClusterAdded(cluster: Cluster) {
@@ -247,9 +228,5 @@ class MapCountriesFragment : MvpAppCompatFragment(), IMapCountriesPresenter,
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }
