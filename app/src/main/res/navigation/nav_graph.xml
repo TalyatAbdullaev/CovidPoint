@@ -6,22 +6,22 @@
     app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.covidpoint.presentation.fragments.splash.SplashFragment"
+        android:name="com.iwgroup.covidpoint.presentation.fragments.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/containerFragment"
-        android:name="com.example.covidpoint.presentation.fragments.container.ContainerFragment"
+        android:name="com.iwgroup.covidpoint.presentation.fragments.container.ContainerFragment"
         android:label="fragment_container"
         tools:layout="@layout/fragment_container" />
     <fragment
         android:id="@+id/listCountriesFragment"
-        android:name="com.example.covidpoint.presentation.fragments.container.listcountries.ListCountriesFragment"
+        android:name="com.iwgroup.covidpoint.presentation.fragments.container.listcountries.ListCountriesFragment"
         android:label="fragment_countries_list"
         tools:layout="@layout/fragment_countries_list" />
     <fragment
         android:id="@+id/mapCountriesFragment"
-        android:name="com.example.covidpoint.presentation.fragments.container.mapcountries.MapCountriesFragment"
+        android:name="com.iwgroup.covidpoint.presentation.fragments.container.mapcountries.MapCountriesFragment"
         android:label="fragment_countries_map"
         tools:layout="@layout/fragment_countries_map" />
 </navigation>

@@ -19,7 +19,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         app:cardBackgroundColor="@color/top_menu_background"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"

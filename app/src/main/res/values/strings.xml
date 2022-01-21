@@ -20,7 +20,7 @@
     <!-- Country Item -->
     <string name="flag_image_description">Флаг</string>
     <string name="label_confirmed">Подтверждено</string>
-    <string name="label_deaths">Смертельныые случаи</string>
+    <string name="label_deaths">Смертельные случаи</string>
     <string name="label_recovered">Выздоровевшие</string>
     <string name="label_dynamic">Динамика заражения</string>
     <string name="btn_detailed">Подробнее</string>
