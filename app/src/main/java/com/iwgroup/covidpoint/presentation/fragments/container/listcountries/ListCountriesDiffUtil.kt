@@ -1,7 +1,7 @@
 package com.iwgroup.covidpoint.presentation.fragments.container.listcountries
 
 import androidx.recyclerview.widget.DiffUtil
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 
 class ListCountriesDiffUtil(
     private val oldList: List<CountryEntity>,

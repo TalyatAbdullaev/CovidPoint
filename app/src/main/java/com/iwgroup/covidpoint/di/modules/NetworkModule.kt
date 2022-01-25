@@ -2,7 +2,7 @@ package com.iwgroup.covidpoint.di.modules
 
 import android.content.Context
 import com.iwgroup.covidpoint.data.network.services.CountryApiService
-import com.iwgroup.covidpoint.data.network.utils.RequestHandler
+import com.iwgroup.covidpoint.data.network.utils.ExceptionHandler
 import com.iwgroup.covidpoint.data.network.utils.Urls
 import dagger.Module
 import dagger.Provides
@@ -31,6 +31,6 @@ class NetworkModule {
         retrofit.create(CountryApiService::class.java)
 
     @Provides
-    fun provideRequestHandler(context: Context): RequestHandler =
-        RequestHandler(context)
+    fun provideRequestHandler(context: Context): ExceptionHandler =
+        ExceptionHandler(context)
 }

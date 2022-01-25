@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.iwgroup.covidpoint.R
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 import com.iwgroup.covidpoint.data.network.utils.Urls
 import com.iwgroup.covidpoint.databinding.CountryItemBinding
 import com.iwgroup.covidpoint.utils.DateConverter

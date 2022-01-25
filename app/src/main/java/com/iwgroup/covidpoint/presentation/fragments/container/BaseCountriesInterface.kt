@@ -1,6 +1,6 @@
 package com.iwgroup.covidpoint.presentation.fragments.container
 
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy

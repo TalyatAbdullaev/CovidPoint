@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.iwgroup.covidpoint.R
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 import com.iwgroup.covidpoint.databinding.FragmentCountriesListBinding
 import com.iwgroup.covidpoint.di.App
 import moxy.MvpAppCompatFragment
@@ -43,17 +45,24 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupSearchingText()
+    }
+
+    private fun setupSearchingText() {
+        binding.etSearch.addTextChangedListener {
+            presenter.textChanged(it.toString())
+        }
     }
 
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = adapter
-        adapter.onItemClickListener = {
-            Log.d("TAG", "country -" + it.country)
-            presenter.onItemClicked(it)
+        adapter.onItemClickListener = { country ->
+            Log.d("TAG", "country -" + country.country)
+            presenter.onItemClicked(country)
         }
 
         val itemAnimator = binding.recyclerView.itemAnimator
-        if(itemAnimator is DefaultItemAnimator)
+        if (itemAnimator is DefaultItemAnimator)
             itemAnimator.supportsChangeAnimations = false
     }
 
@@ -72,7 +81,7 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         val countries = arrayListOf<CountryEntity>()
         countries.addAll(adapter.countries)
 
-        countries.forEachIndexed let@ { index, countryEntity ->
+        countries.forEachIndexed let@{ index, countryEntity ->
             if (countryEntity.id == country.id) {
                 countries[index] = country
                 return@let
@@ -85,16 +94,20 @@ class ListCountriesFragment : MvpAppCompatFragment(), ListCountriesInterface {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.label_error))
             .setMessage(message)
-            .setPositiveButton(getString(R.string.label_repeat), object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    presenter.onPositiveButtonClick(countryId)
-                }
-            })
-            .setNegativeButton(getString(R.string.label_close), object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
+            .setPositiveButton(
+                getString(R.string.label_repeat),
+                object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        presenter.onPositiveButtonClick(countryId)
+                    }
+                })
+            .setNegativeButton(
+                getString(R.string.label_close),
+                object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
 
-                }
-            })
+                    }
+                })
             .show()
     }
 }

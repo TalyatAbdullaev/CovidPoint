@@ -1,6 +1,6 @@
 package com.iwgroup.covidpoint.di.modules
 
-import com.iwgroup.covidpoint.data.database.CountriesDao
+import com.iwgroup.covidpoint.data.database.countries.CountriesDao
 import com.iwgroup.covidpoint.data.network.services.CountryApiService
 import com.iwgroup.covidpoint.data.datasource.DatabaseSourceImpl
 import com.iwgroup.covidpoint.data.repositories.MainRepositoryImpl

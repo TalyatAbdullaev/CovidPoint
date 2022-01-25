@@ -1,225 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
-    app:cardPreventCornerOverlap="false"
-    android:layout_marginLeft="20dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginBottom="10dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constLayout"
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/childLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/parentLayout"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivFlag"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/flag_image_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvCountryName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/childLayout"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFlag"
+            app:layout_constraintEnd_toStartOf="@+id/ivFlag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivFlag"
+            tools:text="США" />
+
+        <TextView
+            android:id="@+id/tvConfirmedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/label_confirmed"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@+id/ivFlag" />
+
+        <TextView
+            android:id="@+id/tvConfirmedNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvCountryName"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
+            tools:text="1000000" />
+
+        <ProgressBar
+            android:id="@+id/pbConfirmed"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:progressDrawable="@drawable/confirmed_progress_bar_color"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum"
+            tools:progress="60" />
 
-            <ImageView
-                android:id="@+id/ivFlag"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:contentDescription="@string/flag_image_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/childLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:el_expanded="false"
+        app:layout_constraintEnd_toEndOf="@+id/parentLayout"
+        app:layout_constraintStart_toStartOf="@+id/parentLayout"
+        app:layout_constraintTop_toBottomOf="@+id/parentLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvCountryName"
-                android:layout_width="0dp"
+                android:id="@+id/tvDeathsLabel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:text="@string/label_deaths"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvDeathsNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="34sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivFlag"
-                app:layout_constraintEnd_toStartOf="@+id/ivFlag"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ivFlag"
-                tools:text="США" />
-
-            <TextView
-                android:id="@+id/tvConfirmedLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/label_confirmed"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/tvCountryName"
-                app:layout_constraintTop_toBottomOf="@+id/ivFlag" />
-
-            <TextView
-                android:id="@+id/tvConfirmedNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvCountryName"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmedLabel"
                 tools:text="1000000" />
 
             <ProgressBar
-                android:id="@+id/pbConfirmed"
+                android:id="@+id/pbDeaths"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="6dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="16dp"
-                android:progressDrawable="@drawable/confirmed_progress_bar_color"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmedNum"
+                android:progressDrawable="@drawable/deaths_progress_bar_color"
                 tools:progress="60" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvRecoveredLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_recovered"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-        <net.cachapa.expandablelayout.ExpandableLayout
-            android:id="@+id/childLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            app:el_expanded="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/parentLayout">
+            <TextView
+                android:id="@+id/tvRecoveredNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                tools:text="1000000" />
+
+            <ProgressBar
+                android:id="@+id/pbRecovered"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="16dp"
+                android:progressDrawable="@drawable/recovered_progress_bar_color"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tvDynamicLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_dynamic"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/confirmedGraph"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+            </com.github.mikephil.charting.charts.BarChart>
 
             <LinearLayout
+                android:id="@+id/dateContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvDeathsLabel"
+                    android:id="@+id/tvDateStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_deaths"
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvDeathsNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="34sp"
+                    android:textSize="11sp"
                     android:textStyle="bold"
-                    tools:text="1000000" />
-
-                <ProgressBar
-                    android:id="@+id/pbDeaths"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="16dp"
-                    android:progressDrawable="@drawable/deaths_progress_bar_color"
-                    tools:progress="60" />
+                    tools:text="01 ноября 2021" />
 
                 <TextView
-                    android:id="@+id/tvRecoveredLabel"
+                    android:id="@+id/tvDateEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_recovered"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvRecoveredNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="34sp"
+                    android:textSize="11sp"
                     android:textStyle="bold"
-                    tools:text="1000000" />
-
-                <ProgressBar
-                    android:id="@+id/pbRecovered"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="16dp"
-                    android:progressDrawable="@drawable/recovered_progress_bar_color"
-                    tools:progress="60" />
-
-                <TextView
-                    android:id="@+id/tvDynamicLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_dynamic"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/confirmedGraph"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" >
-
-                </com.github.mikephil.charting.charts.BarChart>
-
-                <LinearLayout
-                    android:id="@+id/dateContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvDateStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/black"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="01 ноября 2021" />
-
-                    <TextView
-                        android:id="@+id/tvDateEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        tools:text="30 ноября 2021" />
-                </LinearLayout>
-
+                    tools:text="30 ноября 2021" />
             </LinearLayout>
-        </net.cachapa.expandablelayout.ExpandableLayout>
 
-        <Button
-            android:id="@+id/btnDetailed"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/btn_detailed"
-            android:textColor="#868686"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/childLayout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
-</androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/btnDetailed"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_detailed"
+        android:textColor="#868686"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/parentLayout"
+        app:layout_constraintTop_toBottomOf="@id/childLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.iwgroup.covidpoint.data.repositories
 
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 import com.iwgroup.covidpoint.data.network.utils.Result
 import com.iwgroup.covidpoint.data.pojo.CountryResponse
 import com.iwgroup.covidpoint.data.pojo.CountriesResponse
@@ -25,4 +25,8 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getDataFromNetworkById(id: Int): Result<CountryResponse> =
         networkSource.getCountryStatistic(id)
+
+    override suspend fun addDataToDB(country: CountryEntity) {
+        databaseSource.insertCountry(country)
+    }
 }

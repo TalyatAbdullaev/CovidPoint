@@ -12,4 +12,5 @@
     <color name="progress_bar_confirmed_start">#868686</color>
     <color name="column_graph">#979797</color>
     <color name="top_menu_background">#ECECEC</color>
+    <color name="ic_launcher_background">#E21330</color>
 </resources>

@@ -1,8 +1,8 @@
 package com.iwgroup.covidpoint.presentation.fragments.splash
 
 import android.util.Log
-import com.iwgroup.covidpoint.data.database.CountryEntity
-import com.iwgroup.covidpoint.presentation.mapper.CountryMapper
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
+import com.iwgroup.covidpoint.data.mapper.CountryMapper
 import com.iwgroup.covidpoint.data.network.utils.Result
 import com.iwgroup.covidpoint.data.pojo.Country
 import com.iwgroup.covidpoint.data.repositories.interfaces.MainRepository

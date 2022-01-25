@@ -1,12 +1,12 @@
 package com.iwgroup.covidpoint.presentation.fragments.container.mapcountries
 
 import android.util.Log
-import com.iwgroup.covidpoint.data.database.CountryEntity
-import com.iwgroup.covidpoint.data.network.utils.RequestHandler
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
+import com.iwgroup.covidpoint.data.network.utils.ExceptionHandler
 import com.iwgroup.covidpoint.data.network.utils.Result
 import com.iwgroup.covidpoint.data.pojo.Country
 import com.iwgroup.covidpoint.data.repositories.interfaces.MainRepository
-import com.iwgroup.covidpoint.presentation.mapper.CountryMapper
+import com.iwgroup.covidpoint.data.mapper.CountryMapper
 import com.iwgroup.covidpoint.utils.AppUtils
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.UserData
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class MapCountriesPresenter @Inject constructor(
     private val mainRepository: MainRepository,
     private val mapper: CountryMapper<Country, CountryEntity>,
-    private val requestHandler: RequestHandler
+    private val exceptionHandler: ExceptionHandler
 ) : MvpPresenter<MapCountriesInterface>() {
 
     override fun onFirstViewAttach() {
@@ -52,6 +52,7 @@ class MapCountriesPresenter @Inject constructor(
             when (response) {
                 is Result.Success -> {
                     val result: CountryEntity = mapper.mapToEntity(response.data.location)
+                    mainRepository.addDataToDB(result)
                     withContext(Dispatchers.Main) {
                         viewState.hideProgressBar()
                         viewState.showCountryStatistic(result)
@@ -59,7 +60,7 @@ class MapCountriesPresenter @Inject constructor(
                 }
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
-                    val message = requestHandler.requestHandler(response.throwable)
+                    val message = exceptionHandler.requestHandler(response.throwable)
                     viewState.hideProgressBar()
                     viewState.showAlertDialog(message, countryId)
                 }

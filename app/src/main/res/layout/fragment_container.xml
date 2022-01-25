@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,29 +8,29 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     </androidx.viewpager2.widget.ViewPager2>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
         app:cardBackgroundColor="@color/top_menu_background"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/topMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/top_menu_background"
+            app:tabBackground="@drawable/menu_item_background"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabMode="fixed"
+            app:tabPaddingEnd="30dp"
+            app:tabPaddingStart="30dp" />
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

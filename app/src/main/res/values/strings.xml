@@ -25,4 +25,8 @@
     <string name="label_dynamic">Динамика заражения</string>
     <string name="btn_detailed">Подробнее</string>
     <string name="btn_hide">Скрыть</string>
+
+    <!-- Countries Map Fragment -->
+    <string name="search_icon_description">Иконка поиска</string>
+    <string name="country_name_hint">Название страны</string>
 </resources>

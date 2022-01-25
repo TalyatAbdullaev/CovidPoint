@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class Confirmed(
 
     @SerializedName("timeline")
-    val timeline: Map<String, Int>
+    val timeline: Map<String, Int>?
 )

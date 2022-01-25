@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import com.iwgroup.covidpoint.R
-import com.iwgroup.covidpoint.data.database.CountryEntity
+import com.iwgroup.covidpoint.data.database.countries.CountryEntity
 import com.iwgroup.covidpoint.databinding.FragmentCountriesMapBinding
 import com.iwgroup.covidpoint.databinding.MarkerItemBinding
 import com.iwgroup.covidpoint.di.App
@@ -22,6 +22,7 @@ import com.iwgroup.covidpoint.utils.AppUtils
 import com.iwgroup.covidpoint.utils.extentions.drawCountryIntoView
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.iwgroup.covidpoint.utils.extentions.hideKeyboard
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -67,6 +68,11 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
         super.onCreate(savedInstanceState)
     }
 
+    override fun onResume() {
+        super.onResume()
+        this.hideKeyboard()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,7 +84,7 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     override fun showCountryStatistic(country: CountryEntity) {
         progressAlertDialog?.dismiss()
         bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-        binding.bottomSheet.drawCountryIntoView(country)
+        binding.bottomSheet.countryItem.drawCountryIntoView(country)
     }
 
     override fun showCountries(countries: List<CountryEntity>) {
@@ -150,8 +156,8 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
 
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(binding.bottomSheet.root)
-        binding.bottomSheet.childLayout.isExpanded = true
-        binding.bottomSheet.btnDetailed.visibility = View.GONE
+        binding.bottomSheet.countryItem.childLayout.isExpanded = true
+        binding.bottomSheet.countryItem.btnDetailed.visibility = View.GONE
     }
 
     @SuppressLint("MissingPermission")

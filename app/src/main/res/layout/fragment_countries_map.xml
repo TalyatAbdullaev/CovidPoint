@@ -17,7 +17,7 @@
 
         <include
             android:id="@+id/bottomSheet"
-            layout="@layout/country_item"
+            layout="@layout/bottom_sheet_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:behavior_hideable="true"
