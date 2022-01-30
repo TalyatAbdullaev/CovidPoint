@@ -2,11 +2,11 @@ package com.iwgroup.covidpoint.presentation.fragments.container.mapcountries
 
 import android.util.Log
 import com.iwgroup.covidpoint.data.database.countries.CountryEntity
+import com.iwgroup.covidpoint.data.mapper.CountryMapper
 import com.iwgroup.covidpoint.data.network.utils.ExceptionHandler
 import com.iwgroup.covidpoint.data.network.utils.Result
 import com.iwgroup.covidpoint.data.pojo.Country
 import com.iwgroup.covidpoint.data.repositories.interfaces.MainRepository
-import com.iwgroup.covidpoint.data.mapper.CountryMapper
 import com.iwgroup.covidpoint.utils.AppUtils
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.UserData
@@ -23,6 +23,8 @@ class MapCountriesPresenter @Inject constructor(
     private val exceptionHandler: ExceptionHandler
 ) : MvpPresenter<MapCountriesInterface>() {
 
+    private val searchedCountries = arrayListOf<CountryEntity>()
+
     override fun onFirstViewAttach() {
         getCountriesFromDB()
     }
@@ -35,24 +37,40 @@ class MapCountriesPresenter @Inject constructor(
     }
 
     fun onPlacemarkTap(mapObject: MapObject) {
-        viewState.showProgressBar()
         val userData = mapObject.userData as UserData
         val countryId = userData.data.getValue(AppUtils.ID_KEY).toInt()
-        getDataFromNetworkById(countryId)
+        val country = checkPreviouslySearched(countryId)
+
+        if(country != null) viewState.showCountryStatistic(country)
+        else getDataFromNetworkById(countryId)
     }
 
     fun onPositiveButtonClick(countryId: Int) {
         getDataFromNetworkById(countryId)
     }
 
+    private fun checkPreviouslySearched(id: Int): CountryEntity? {
+        var country: CountryEntity? = null
+
+        searchedCountries.forEach let@ {
+            if (it.id == id) {
+                country = it
+                return@let
+            }
+        }
+        return country
+    }
+
     private fun getDataFromNetworkById(countryId: Int) {
+        viewState.showProgressBar()
         presenterScope.launch {
             val response = mainRepository.getDataFromNetworkById(countryId)
 
             when (response) {
                 is Result.Success -> {
                     val result: CountryEntity = mapper.mapToEntity(response.data.location)
-                    mainRepository.addDataToDB(result)
+                    searchedCountries.add(result)
+
                     withContext(Dispatchers.Main) {
                         viewState.hideProgressBar()
                         viewState.showCountryStatistic(result)
@@ -61,8 +79,11 @@ class MapCountriesPresenter @Inject constructor(
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
                     val message = exceptionHandler.requestHandler(response.throwable)
-                    viewState.hideProgressBar()
-                    viewState.showAlertDialog(message, countryId)
+
+                    withContext(Dispatchers.Main) {
+                        viewState.hideProgressBar()
+                        viewState.showAlertDialog(message, countryId)
+                    }
                 }
             }
         }

@@ -15,9 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidPoint">
         <activity
+            android:name=".presentation.MainActivity2"
+            android:exported="true" />
+        <activity
             android:name=".presentation.MainActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

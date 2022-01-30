@@ -28,9 +28,38 @@ class ListCountriesAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(country: CountryEntity) {
-            binding.countryItem.drawCountryIntoView(country)
-            checkExpanded(binding.countryItem, adapterPosition)
-            setItemClickListener(binding.countryItem, adapterPosition, country)
+            with(binding.countryItem) {
+                fun checkExpanded() {
+                    if (expandedItemsSet.contains(countries[adapterPosition].id)) {
+                        childLayout.isExpanded = true
+                        btnDetailed.text = root.resources.getString(R.string.btn_hide)
+                    } else {
+                        childLayout.isExpanded = false
+                        btnDetailed.text = root.resources.getString(R.string.btn_detailed)
+                    }
+                }
+
+                fun setItemClickListener() {
+                    btnDetailed.setOnClickListener {
+                        if (childLayout.isExpanded) {
+                            childLayout.isExpanded = false
+                            btnDetailed.text = root.resources.getString(R.string.btn_detailed)
+
+                            expandedItemsSet.remove(countries[adapterPosition].id)
+                        } else {
+                            childLayout.isExpanded = true
+                            btnDetailed.text = root.resources.getString(R.string.btn_hide)
+
+                            expandedItemsSet.add(countries[adapterPosition].id)
+                            onItemClickListener?.invoke(country)
+                        }
+                    }
+                }
+
+                drawCountryIntoView(country)
+                checkExpanded()
+                setItemClickListener()
+            }
         }
     }
 
@@ -45,44 +74,4 @@ class ListCountriesAdapter :
     }
 
     override fun getItemCount(): Int = countries.size
-
-    private fun checkExpanded(item: CountryItemBinding, adapterPosition: Int) {
-        with(item) {
-            if (expandedItemsSet.contains(countries[adapterPosition].id)) {
-                childLayout.isExpanded = true
-                btnDetailed.text =
-                    root.resources.getString(R.string.btn_hide)
-            } else {
-                childLayout.isExpanded = false
-                btnDetailed.text =
-                    root.resources.getString(R.string.btn_detailed)
-            }
-        }
-    }
-
-    private fun setItemClickListener(
-        item: CountryItemBinding,
-        adapterPosition: Int,
-        country: CountryEntity
-    ) {
-        with(item) {
-            btnDetailed.setOnClickListener {
-                val child = childLayout
-                if (child.isExpanded) {
-                    child.isExpanded = false
-                    btnDetailed.text =
-                        root.resources.getString(R.string.btn_detailed)
-
-                    expandedItemsSet.remove(countries[adapterPosition].id)
-                } else {
-                    child.isExpanded = true
-                    btnDetailed.text =
-                        root.resources.getString(R.string.btn_hide)
-
-                    expandedItemsSet.add(countries[adapterPosition].id)
-                    onItemClickListener?.invoke(country)
-                }
-            }
-        }
-    }
 }

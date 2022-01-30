@@ -18,8 +18,8 @@ class ListCountriesPresenter @Inject constructor(
     private val exceptionHandler: ExceptionHandler
 ) : MvpPresenter<ListCountriesInterface>() {
 
-    private var countries = listOf<CountryEntity>()
-    private val searchingCountries = arrayListOf<CountryEntity>()
+    private val countries = arrayListOf<CountryEntity>()
+    private val searchedCountries = arrayListOf<CountryEntity>()
     private var job: Job? = null
 
     override fun onFirstViewAttach() {
@@ -28,14 +28,19 @@ class ListCountriesPresenter @Inject constructor(
 
     private fun getCountriesFromDB() {
         presenterScope.launch {
-            countries = mainRepository.getDataFromDB()
-            withContext(Dispatchers.Main) { viewState.showCountries(countries) }
+            val countriesFromDB = mainRepository.getDataFromDB()
+            countries.addAll(countriesFromDB)
+            searchedCountries.addAll(countriesFromDB)
+
+            withContext(Dispatchers.Main) { viewState.showCountries(countries.toList()) }
         }
     }
 
     fun onItemClicked(country: CountryEntity) {
-        val countryId = country.id
-        getDataFromNetworkById(countryId)
+        if (checkItemPreviouslyClicked(country))
+            viewState.showCountries(searchedCountries.toList())
+        else
+            getDataFromNetworkById(country.id)
     }
 
     fun onPositiveButtonClick(countryId: Int) {
@@ -46,31 +51,32 @@ class ListCountriesPresenter @Inject constructor(
         job?.cancel()
         job = presenterScope.launch {
             delay(300)
-            searchingCountries.clear()
-            searchingCountries.addAll(countries.filter {
+            searchedCountries.clear()
+            searchedCountries.addAll(countries.filter {
                 it.country.startsWith(text, true)
             })
 
-            withContext(Dispatchers.Main) { viewState.showCountries(searchingCountries) }
+            Log.d("TAG", "Countries - " + countries.toString())
+
+            withContext(Dispatchers.Main) { viewState.showCountries(searchedCountries.toList()) }
         }
     }
 
     private fun getDataFromNetworkById(countryId: Int) {
+        Log.d("TAG", "countryID - " + countryId)
         presenterScope.launch {
             val response = mainRepository.getDataFromNetworkById(countryId)
 
             when (response) {
                 is Result.Success -> {
                     val result: CountryEntity = mapper.mapToEntity(response.data.location)
-                    mainRepository.addDataToDB(result)
-                    countries = mainRepository.getDataFromDB()
-                    replaceSearchItem(result)
+                    replaceClickedItem(countries, result)
+                    replaceClickedItem(searchedCountries, result)
 
-                    withContext(Dispatchers.Main) { viewState.showCountries(searchingCountries) }
+                    withContext(Dispatchers.Main) { viewState.showCountries(searchedCountries.toList()) }
                 }
                 is Result.Error -> {
                     Log.d("TAG", "error - " + response.throwable.message)
-
                     val message = exceptionHandler.requestHandler(response.throwable)
 
                     withContext(Dispatchers.Main) { viewState.showAlertDialog(message, countryId) }
@@ -79,12 +85,25 @@ class ListCountriesPresenter @Inject constructor(
         }
     }
 
-    private fun replaceSearchItem(country: CountryEntity) {
-        searchingCountries.forEachIndexed let@{ index, countryEntity ->
+    private fun replaceClickedItem(list: ArrayList<CountryEntity>, country: CountryEntity) {
+        list.forEachIndexed let@{ index, countryEntity ->
             if (country.id == countryEntity.id) {
-                searchingCountries[index] = country
+                list[index] = country
                 return@let
             }
         }
+    }
+
+    private fun checkItemPreviouslyClicked(country: CountryEntity): Boolean {
+        var checked: Boolean = false
+        countries.forEach let@{
+            if (it.id == country.id) {
+                if (it.confirmedStats != null) {
+                    checked = true
+                }
+                return@let
+            }
+        }
+        return checked
     }
 }
