@@ -29,4 +29,5 @@
     <!-- Countries Map Fragment -->
     <string name="search_icon_description">Иконка поиска</string>
     <string name="country_name_hint">Название страны</string>
+    <string name="you_here">ВЫ ЗДЕСЬ</string>
 </resources>

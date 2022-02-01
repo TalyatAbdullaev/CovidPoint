@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val activityView = findViewById<FrameLayout>(R.id.mainActivity)
-        hideStatusBar(activityView)
+        hideStatusBar()
     }
 
     override fun onBackPressed() {
@@ -31,24 +30,18 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.fragments[0].childFragmentManager.fragments[0] as ContainerFragment
         val currentFragment = containerFragment.viewPager.currentItem
 
-        if (currentFragment == 0)
-            this.finish()
-        else
-            containerFragment.viewPager.currentItem = 0
+        if (currentFragment == 0) this.finish()
+        else containerFragment.viewPager.currentItem = 0
     }
 
-    private fun hideStatusBar(view: View) {
+    private fun hideStatusBar() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        ViewCompat.setOnApplyWindowInsetsListener(view) { mainView, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            // Apply the insets as padding to the view. Here we're setting all of the
-            // dimensions, but apply as appropriate to your layout. You could also
-            // update the views margin if more appropriate.
-            mainView.updatePadding(0,0,0, insets.bottom)
+        val activityView = findViewById<FrameLayout>(R.id.mainActivity)
 
-            // Return CONSUMED if we don't want the window insets to keep being passed
-            // down to descendant views.
+        ViewCompat.setOnApplyWindowInsetsListener(activityView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            view.updatePadding(0,0,0, insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
     }

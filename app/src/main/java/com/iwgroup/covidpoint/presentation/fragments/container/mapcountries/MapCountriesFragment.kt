@@ -13,7 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.iwgroup.covidpoint.R
 import com.iwgroup.covidpoint.data.database.countries.CountryEntity
@@ -162,10 +165,19 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
     @SuppressLint("MissingPermission")
     private fun getLocation() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        fusedLocationClient.lastLocation
+        val tokenSource = CancellationTokenSource()
+        fusedLocationClient.getCurrentLocation(
+            LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY,
+            tokenSource.token
+        )
             .addOnSuccessListener {
                 if (it != null) {
                     val point = Point(it.latitude, it.longitude)
+
+                    val placemarkView = MarkerItemBinding.inflate(layoutInflater)
+                    placemarkView.tvConfirmedValue.text = getString(R.string.you_here)
+                    yandexMap.map.mapObjects.addPlacemark(point, ViewProvider(placemarkView.root))
+
                     moveCameraToPoint(point, yandexMap.map.cameraPosition.zoom)
                 }
             }
@@ -189,7 +201,9 @@ class MapCountriesFragment : MvpAppCompatFragment(), MapCountriesInterface,
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: MutableList<PermissionRequest>?,
                     token: PermissionToken?
-                ) { token?.continuePermissionRequest() }
+                ) {
+                    token?.continuePermissionRequest()
+                }
             })
             .check()
     }
